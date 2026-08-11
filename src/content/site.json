@@ -4,6 +4,9 @@
     "description": "Una página para que encuentren tu negocio, te tomen en serio y te escriban sabiendo qué ofrecés.",
     "ogImage": ""
   },
+  "header": {
+    "nombre": "Martin De Lucca"
+  },
   "whatsapp": {
     "numero": "5493524401654",
     "etiquetaCta": "Contame tu caso por WhatsApp",
@@ -19,15 +22,17 @@
   "hero": {
     "eyebrow": "CÓRDOBA / NEGOCIOS DE SERVICIOS",
     "h1": "Trabajás bien. Cuando te buscan, no se nota.",
-    "bajada": "Armo una página para que te encuentren cuando te buscan, te tomen en serio cuando te miran, y te escriban sabiendo qué ofrecés. Para negocios de servicios que ya consiguen clientes y cierran todo a mano.",
+    "bajada": "Diseño tu web para que te encuentren cuando te buscan, entiendan lo que hacés y confíen en tu negocio antes de escribirte.",
     "microPrueba": "",
     "diagrama": {
       "estado": "HOY",
+      "canales": "GOOGLE · INSTAGRAM · UN CONOCIDO",
       "nodos": [
-        "Instagram",
-        "DM «hola, info?»",
-        "explicás todo de cero",
-        "algunos desaparecen"
+        "TE BUSCAN",
+        "TE ENCUENTRAN A MEDIAS",
+        "NO TERMINAN DE ENTENDER",
+        "DUDAN",
+        "«hola, info?»"
       ]
     }
   },

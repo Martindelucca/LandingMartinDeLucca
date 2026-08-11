@@ -1,0 +1,62 @@
+---
+import WhatsappButton from './ui/WhatsappButton.astro';
+
+interface Props {
+  header: {
+    nombre: string;
+  };
+  whatsapp: {
+    numero: string;
+    etiquetaCta: string;
+    mensajes: {
+      hero: string;
+    };
+  };
+}
+
+const { header, whatsapp } = Astro.props;
+---
+
+<header class="site-header">
+  <p class="site-name">{header.nombre}</p>
+  <WhatsappButton
+    number={whatsapp.numero}
+    message={whatsapp.mensajes.hero}
+    label={whatsapp.etiquetaCta}
+    variant="ghost"
+    origin="header"
+  />
+</header>
+
+<style>
+  .site-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-inline: auto;
+    max-width: 1120px;
+    padding: var(--sp-5) var(--sp-5);
+  }
+
+  .site-name {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .site-header :global(.whatsapp-button) {
+    display: none;
+  }
+
+  @media (min-width: 900px) {
+    .site-header {
+      padding-inline: var(--sp-8);
+    }
+
+    .site-header :global(.whatsapp-button) {
+      display: inline-flex;
+    }
+  }
+</style>

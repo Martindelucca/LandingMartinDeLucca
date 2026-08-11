@@ -5,13 +5,15 @@ interface Props {
   number: string;
   message: string;
   label: string;
+  variant?: 'primary' | 'ghost';
+  origin?: 'header' | 'hero';
 }
 
-const { number, message, label } = Astro.props;
+const { number, message, label, variant = 'primary', origin = 'hero' } = Astro.props;
 const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 ---
 
-<a class="whatsapp-button" href={href} target="_blank" rel="noopener" data-origin="hero">
+<a class:list={['whatsapp-button', variant]} href={href} target="_blank" rel="noopener" data-origin={origin}>
   <svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
     <path d={siWhatsapp.path}></path>
   </svg>
@@ -38,9 +40,20 @@ const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
     transition: background-color 150ms ease, border-color 150ms ease;
   }
 
+  .whatsapp-button.ghost {
+    background: transparent;
+    border-color: var(--rule-strong);
+    color: var(--text-strong);
+  }
+
   .whatsapp-button:hover {
     background: var(--green-hover);
     border-color: var(--green-hover);
+  }
+
+  .whatsapp-button.ghost:hover {
+    background: var(--paper-alt);
+    border-color: var(--rule-strong);
   }
 
   .whatsapp-icon {
