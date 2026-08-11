@@ -34,7 +34,8 @@ const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
     gap: var(--sp-3);
     justify-content: center;
     line-height: 1.2;
-    min-height: 52px;
+    height: 56px;
+    min-height: 56px;
     padding: var(--sp-4) var(--sp-6);
     text-decoration: none;
     transition: background-color 150ms ease, border-color 150ms ease;
@@ -42,7 +43,7 @@ const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
 
   .whatsapp-button.ghost {
     background: transparent;
-    border-color: var(--rule-strong);
+    border-color: var(--rule-hard);
     color: var(--text-strong);
   }
 
@@ -52,8 +53,8 @@ const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
   }
 
   .whatsapp-button.ghost:hover {
-    background: var(--paper-alt);
-    border-color: var(--rule-strong);
+    background: var(--panel);
+    border-color: var(--rule-hard);
   }
 
   .whatsapp-icon {

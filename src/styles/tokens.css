@@ -1,20 +1,18 @@
 :root {
-  --paper: #F1EFEA;
-  --paper-alt: #E7E5DE;
-  --ink: #0D1311;
-  --ink-alt: #161D1A;
-  --text: #2E3733;
-  --text-strong: #0D1311;
-  --text-muted: #5C6661;
-  --text-on-ink: #F1EFEA;
-  --text-on-ink-muted: #9AA5A0;
-  --green: #0E5C45;
-  --green-hover: #0A4735;
-  --green-light: #3FBE93;
+  --paper: #F1F1EE;
+  --panel: #E8E8E3;
+  --ink: #0E1211;
+  --ink-alt: #12201C;
+  --text: #4B5250;
+  --text-strong: #0E1211;
+  --text-on-ink: #F1F1EE;
+  --text-on-ink-muted: #8E9997;
+  --green: #0E6B57;
+  --green-hover: #0A5544;
+  --green-light: #6FBFA8;
   --on-green: #FFFFFF;
-  --rule: #D5D2C9;
-  --rule-strong: #B8B4A9;
-  --grid: #E4E1D9;
+  --rule: #D3D3CC;
+  --rule-hard: #0E1211;
 
   --sp-1: 4px;
   --sp-2: 8px;

@@ -1,0 +1,87 @@
+---
+interface Props {
+  problema: {
+    titulo: string;
+    citas: string[];
+    puente: string;
+  };
+}
+
+const { problema } = Astro.props;
+---
+
+<section class="problema" id="problema" aria-labelledby="problema-title">
+  <h2 id="problema-title" class="section-label">02 / {problema.titulo}</h2>
+  <div class="problem-quotes">
+    {problema.citas.map((cita) => <p>{cita}</p>)}
+  </div>
+  <p class="problem-bridge">{problema.puente}</p>
+</section>
+
+<style>
+  .problema {
+    border-bottom: 1px solid var(--rule);
+    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+  }
+
+  .section-label {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-6);
+    text-transform: uppercase;
+  }
+
+  .problem-quotes {
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    display: grid;
+    gap: 1px;
+    grid-template-columns: 1fr;
+  }
+
+  .problem-quotes p {
+    background: var(--paper);
+    color: var(--text-strong);
+    font-size: 17px;
+    line-height: 1.45;
+    max-width: 34rem;
+    padding: var(--sp-5);
+  }
+
+  .problem-bridge {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin-top: var(--sp-8);
+    max-width: 34rem;
+  }
+
+  @media (min-width: 600px) {
+    .problem-quotes {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .problem-quotes p {
+      padding: 26px;
+    }
+  }
+
+  @media (min-width: 900px) {
+    .problema {
+      padding-block: calc(var(--sp-12) + var(--sp-2));
+      padding-inline: calc(var(--sp-8) + var(--sp-2));
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .problema {
+      padding-inline: var(--sp-16);
+    }
+  }
+</style>

@@ -12,31 +12,29 @@ const { estado, canales, nodos } = Astro.props;
   <p class="diagram-state">{estado}</p>
   <ol class="diagram" aria-label={estado}>
     {nodos.map((nodo, index) => (
-      <li class="diagram-node">
-        <span class="diagram-index">{String(index + 1).padStart(2, '0')}</span>
-        <span class="diagram-text">{nodo}</span>
-        {index === 0 && <span class="diagram-channels">{canales}</span>}
-      </li>
+      <>
+        <li class:list={['diagram-node', index < 2 ? 'diagram-node--firm' : 'diagram-node--fading']}>
+          <span class="diagram-index">{String(index + 1).padStart(2, '0')}</span>
+          <span class="diagram-text">{nodo}</span>
+          {index === 0 && <span class="diagram-channels">{canales}</span>}
+        </li>
+        {index < nodos.length - 1 && <li class="diagram-arrow" aria-hidden="true">↓</li>}
+      </>
     ))}
   </ol>
 </div>
 
 <style>
   .diagram-panel {
-    background: var(--paper-alt);
-    background-image: none;
-    border: 1px solid var(--rule-strong);
     min-width: 0;
-    overflow: hidden;
-    padding: var(--sp-5);
   }
 
   .diagram-state {
-    color: var(--green);
+    color: var(--text);
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 500;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     line-height: 1.2;
     margin-bottom: var(--sp-6);
     text-transform: uppercase;
@@ -45,32 +43,42 @@ const { estado, canales, nodos } = Astro.props;
   .diagram {
     display: flex;
     flex-direction: column;
-    gap: var(--sp-6);
+    gap: 10px;
+    list-style: none;
     min-width: 0;
   }
 
   .diagram-node {
-    align-items: flex-start;
-    background: var(--paper);
-    border: 1px dashed var(--rule-strong);
+    align-items: center;
     border-radius: var(--radius);
-    color: var(--text);
-    display: flex;
-    flex-direction: column;
-    font-family: 'JetBrains Mono', monospace;
+    display: grid;
+    font-family: 'Archivo Variable', Arial, sans-serif;
     font-size: 15px;
-    gap: var(--sp-2);
-    justify-content: flex-start;
-    line-height: 1.4;
-    min-height: 52px;
+    font-weight: 600;
+    gap: var(--sp-3);
+    grid-template-columns: auto minmax(0, 1fr);
+    line-height: 1.25;
+    min-height: 48px;
     min-width: 0;
-    padding: var(--sp-4) var(--sp-5);
-    position: relative;
+    padding: 14px var(--sp-4);
+  }
+
+  .diagram-node--firm {
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    color: var(--text-strong);
+  }
+
+  .diagram-node--fading {
+    border: 1px dashed var(--text);
+    color: var(--text);
   }
 
   .diagram-index,
-  .diagram-channels {
-    color: var(--text-muted);
+  .diagram-channels,
+  .diagram-arrow {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     font-weight: 400;
     letter-spacing: 0.04em;
@@ -78,48 +86,18 @@ const { estado, canales, nodos } = Astro.props;
   }
 
   .diagram-channels {
+    grid-column: 2;
     text-transform: uppercase;
   }
 
-  .diagram-node:not(:last-child)::after {
-    color: var(--text-muted);
-    content: '↓';
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
-    left: 50%;
-    line-height: 1;
-    position: absolute;
-    top: calc(100% + var(--sp-3));
-    transform: translate(-50%, -50%);
-    z-index: 1;
+  .diagram-arrow {
+    padding-left: var(--sp-4);
   }
 
   @media (min-width: 900px) {
-    .diagram-panel {
-      background-color: var(--paper);
-      background-image: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent calc(var(--sp-8) - 1px),
-        var(--grid) calc(var(--sp-8) - 1px),
-        var(--grid) var(--sp-8)
-      ), repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent calc(var(--sp-8) - 1px),
-        var(--grid) calc(var(--sp-8) - 1px),
-        var(--grid) var(--sp-8)
-      );
-      padding: var(--sp-8);
-    }
-
-    .diagram-state {
-      font-size: 13px;
-    }
-
     .diagram-node {
-      max-width: 100%;
-      width: 340px;
+      max-width: 340px;
+      width: 100%;
     }
 
     .diagram-text,

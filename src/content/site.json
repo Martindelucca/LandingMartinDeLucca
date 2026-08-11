@@ -5,7 +5,8 @@
     "ogImage": ""
   },
   "header": {
-    "nombre": "Martin De Lucca"
+    "nombre": "Martin De Lucca",
+    "ctaLabel": "WHATSAPP"
   },
   "whatsapp": {
     "numero": "5493524401654",
@@ -37,7 +38,17 @@
       ]
     }
   },
-  "problema": null,
+  "problema": {
+    "titulo": "PROBLEMA",
+    "citas": [
+      "«Me recomendaron, me buscaron en Google y no encontraron nada mío.»",
+      "«Tengo buenos clientes, pero online parezco improvisado.»",
+      "«Todo está repartido entre publicaciones, destacadas y chats.»",
+      "«Me preguntan siempre lo mismo: precio, cómo funciona, qué incluye.»",
+      "«Me escriben, contesto todo, y después desaparecen.»"
+    ],
+    "puente": "El problema no es que te falte una página. Es que tu negocio existe en un solo lugar."
+  },
   "solucion": null,
   "queConstruyo": null,
   "incluye": null,

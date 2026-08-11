@@ -1,9 +1,8 @@
 ---
-import WhatsappButton from './ui/WhatsappButton.astro';
-
 interface Props {
   header: {
     nombre: string;
+    ctaLabel: string;
   };
   whatsapp: {
     numero: string;
@@ -15,28 +14,24 @@ interface Props {
 }
 
 const { header, whatsapp } = Astro.props;
+const href = `https://wa.me/${whatsapp.numero}?text=${encodeURIComponent(whatsapp.mensajes.hero)}`;
 ---
 
 <header class="site-header">
   <p class="site-name">{header.nombre}</p>
-  <WhatsappButton
-    number={whatsapp.numero}
-    message={whatsapp.mensajes.hero}
-    label={whatsapp.etiquetaCta}
-    variant="ghost"
-    origin="header"
-  />
+  <a class="header-cta" href={href} target="_blank" rel="noopener" data-origin="header">
+    <span class="header-cta-square" aria-hidden="true"></span>
+    <span>{header.ctaLabel}</span>
+  </a>
 </header>
 
 <style>
   .site-header {
     align-items: center;
-    border-bottom: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule-hard);
     display: flex;
     justify-content: space-between;
-    margin-inline: auto;
-    max-width: 1120px;
-    padding: var(--sp-5) var(--sp-5);
+    padding: var(--sp-4) var(--sp-5);
   }
 
   .site-name {
@@ -47,27 +42,50 @@ const { header, whatsapp } = Astro.props;
     line-height: 1.2;
   }
 
-  .site-header :global(.whatsapp-button) {
+  .header-cta {
+    align-items: center;
+    background: var(--ink);
+    color: var(--paper);
     display: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    gap: var(--sp-2);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    padding: 11px var(--sp-4);
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .header-cta-square {
+    background: var(--green);
+    display: block;
+    height: var(--sp-2);
+    width: var(--sp-2);
+  }
+
+  .header-cta:focus-visible {
+    outline-color: var(--green);
+  }
+
+  .header-cta:hover {
+    background: var(--ink-alt);
   }
 
   @media (min-width: 900px) {
     .site-header {
-      padding-inline: var(--sp-8);
+      padding-inline: calc(var(--sp-8) + var(--sp-2));
     }
 
-    .site-header :global(.whatsapp-button) {
+    .header-cta {
       display: inline-flex;
     }
+  }
 
-    .site-header :global(.whatsapp-button.ghost) {
-      font-size: 14px;
-      min-height: 52px;
-      padding-inline: var(--sp-4);
-    }
-
-    .site-header :global(.whatsapp-button.ghost .whatsapp-icon) {
-      display: none;
+  @media (min-width: 1280px) {
+    .site-header {
+      padding-inline: var(--sp-16);
     }
   }
 </style>

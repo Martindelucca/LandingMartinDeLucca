@@ -2,16 +2,8 @@
   font-family: 'Archivo Variable';
   font-style: normal;
   font-display: swap;
-  font-weight: 600 700;
+  font-weight: 400 700;
   src: url('/fonts/archivo-latin-wght-normal.woff2') format('woff2');
-}
-
-@font-face {
-  font-family: 'Source Serif 4 Variable';
-  font-style: normal;
-  font-display: swap;
-  font-weight: 400 600;
-  src: url('/fonts/source-serif-4-latin-wght-normal.woff2') format('woff2');
 }
 
 @font-face {
@@ -31,7 +23,7 @@
 }
 
 :root {
-  font-family: 'Source Serif 4 Variable', Georgia, serif;
+  font-family: 'Schibsted Grotesk', 'Archivo Variable', Arial, sans-serif;
   color: var(--text);
   background: var(--paper);
   font-synthesis: none;
@@ -42,7 +34,7 @@ body {
   min-width: 320px;
   background: var(--paper);
   font-size: 17px;
-  line-height: 1.62;
+  line-height: 1.6;
 }
 
 :focus-visible {
