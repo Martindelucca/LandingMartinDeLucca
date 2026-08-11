@@ -1,6 +1,7 @@
 ---
 interface Props {
   problema: {
+    numero: string;
     titulo: string;
     citas: string[];
     puente: string;
@@ -11,9 +12,9 @@ const { problema } = Astro.props;
 ---
 
 <section class="problema" id="problema" aria-labelledby="problema-title">
-  <h2 id="problema-title" class="section-label">02 / {problema.titulo}</h2>
+  <h2 id="problema-title" class="section-label">{problema.numero} / {problema.titulo}</h2>
   <div class="problem-quotes">
-    {problema.citas.map((cita) => <p>{cita}</p>)}
+    {problema.citas.map((cita) => <p><span>{cita}</span></p>)}
   </div>
   <p class="problem-bridge">{problema.puente}</p>
 </section>
@@ -48,8 +49,13 @@ const { problema } = Astro.props;
     color: var(--text-strong);
     font-size: 17px;
     line-height: 1.45;
-    max-width: 34rem;
     padding: var(--sp-5);
+    width: 100%;
+  }
+
+  .problem-quotes p span {
+    display: block;
+    max-width: 34rem;
   }
 
   .problem-bridge {
@@ -69,6 +75,10 @@ const { problema } = Astro.props;
 
     .problem-quotes p {
       padding: 26px;
+    }
+
+    .problem-quotes p:last-child {
+      grid-column: 1 / -1;
     }
   }
 

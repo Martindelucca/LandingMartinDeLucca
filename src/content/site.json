@@ -25,20 +25,22 @@
     "h1": "Trabajás bien. Cuando te buscan, no se nota.",
     "bajada": "Diseño tu web para que te encuentren cuando te buscan, entiendan lo que hacés y confíen en tu negocio antes de escribirte.",
     "microPrueba": "",
+    "microPruebaPrefix": "Caso publicado",
     "microPruebaFallback": "Un proyecto publicado y funcionando",
     "diagrama": {
       "estado": "HOY",
       "canales": "GOOGLE · INSTAGRAM · UN CONOCIDO",
       "nodos": [
-        "TE BUSCAN",
-        "TE ENCUENTRAN A MEDIAS",
-        "NO TERMINAN DE ENTENDER",
-        "DUDAN",
-        "DESAPARECEN"
+        "Te buscan",
+        "Te encuentran a medias",
+        "No terminan de entender",
+        "Dudan",
+        "Desaparecen"
       ]
     }
   },
   "problema": {
+    "numero": "01",
     "titulo": "PROBLEMA",
     "citas": [
       "«Me recomendaron, me buscaron en Google y no encontraron nada mío.»",

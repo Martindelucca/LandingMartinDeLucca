@@ -8,6 +8,7 @@ interface Props {
     h1: string;
     bajada: string;
     microPrueba: string;
+    microPruebaPrefix?: string;
     microPruebaFallback?: string;
     diagrama: {
       estado: string;
@@ -35,13 +36,14 @@ const { hero, whatsapp, casos } = Astro.props;
 const firstCase = casos?.casos?.[0];
 const microProofUrl = firstCase?.url?.trim() ?? '';
 const microProofLabel = firstCase?.nombre?.trim() || hero.microPruebaFallback?.trim() || hero.microPrueba.trim();
+const microProofPrefix = hero.microPruebaPrefix?.trim() ?? '';
 const hasMicroProof = Boolean(microProofUrl && microProofLabel);
 const h1Sentences = hero.h1.trim().split(/(?<=\.)\s+/);
 const h1FirstSentence = h1Sentences[0] ?? hero.h1;
 const h1SecondSentence = h1Sentences.slice(1).join(' ');
 const h1Words = h1SecondSentence.split(/\s+/).filter(Boolean);
-const h1Tail = h1Words.slice(-3).join(' ');
-const h1Lead = h1Words.slice(0, -3).join(' ');
+const h1SecondLead = h1Words.slice(0, 3).join(' ');
+const h1SecondTail = h1Words.slice(3).join(' ');
 ---
 
 <section class="hero" aria-labelledby="hero-title">
@@ -52,9 +54,9 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
       {h1SecondSentence && (
         <>
           <br />
-          <span>
-            {h1Lead}{h1Lead && ' '}
-            <span class="nowrap">{h1Tail}</span>
+          <span class="h1-second">
+            <span>{h1SecondLead}</span>{h1SecondTail && ' '}
+            <span class="h1-tail">{h1SecondTail}</span>
           </span>
         </>
       )}
@@ -69,6 +71,12 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
       />
       <p class="microcopy">{whatsapp.microcopy}</p>
     </div>
+    {hasMicroProof && (
+      <p class="micro-proof">
+        {microProofPrefix && <span>{microProofPrefix}: </span>}
+        <a href={microProofUrl}>{microProofLabel} <span aria-hidden="true">→</span></a>
+      </p>
+    )}
   </div>
   <div class="hero-diagram">
     <DiagramaRecorrido
@@ -76,11 +84,6 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
       canales={hero.diagrama.canales}
       nodos={hero.diagrama.nodos}
     />
-    {hasMicroProof && (
-      <p class="micro-proof">
-        <a href={microProofUrl}>{microProofLabel} <span aria-hidden="true">→</span></a>
-      </p>
-    )}
   </div>
 </section>
 
@@ -122,8 +125,9 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
     line-height: 1.04;
   }
 
-  .nowrap {
-    white-space: nowrap;
+  .h1-second,
+  .h1-tail {
+    display: inline;
   }
 
   .hero-lede {
@@ -194,6 +198,10 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
 
     h1 {
       font-size: 50px;
+    }
+
+    .h1-tail {
+      display: block;
     }
 
     .hero-action {
