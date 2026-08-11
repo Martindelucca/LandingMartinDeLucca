@@ -6,7 +6,7 @@ interface Props {
   message: string;
   label: string;
   variant?: 'primary' | 'ghost';
-  origin?: 'header' | 'hero';
+  origin?: 'header' | 'hero' | 'sticky';
 }
 
 const { number, message, label, variant = 'primary', origin = 'hero' } = Astro.props;

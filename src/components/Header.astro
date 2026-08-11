@@ -31,6 +31,7 @@ const { header, whatsapp } = Astro.props;
 <style>
   .site-header {
     align-items: center;
+    border-bottom: 1px solid var(--rule);
     display: flex;
     justify-content: space-between;
     margin-inline: auto;
@@ -57,6 +58,16 @@ const { header, whatsapp } = Astro.props;
 
     .site-header :global(.whatsapp-button) {
       display: inline-flex;
+    }
+
+    .site-header :global(.whatsapp-button.ghost) {
+      font-size: 14px;
+      min-height: 52px;
+      padding-inline: var(--sp-4);
+    }
+
+    .site-header :global(.whatsapp-button.ghost .whatsapp-icon) {
+      display: none;
     }
   }
 </style>

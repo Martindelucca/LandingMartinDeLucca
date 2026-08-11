@@ -8,6 +8,7 @@ interface Props {
     h1: string;
     bajada: string;
     microPrueba: string;
+    microPruebaFallback?: string;
     diagrama: {
       estado: string;
       canales: string;
@@ -22,9 +23,19 @@ interface Props {
       hero: string;
     };
   };
+  casos?: {
+    casos?: Array<{
+      nombre?: string | null;
+      url?: string | null;
+    }> | null;
+  } | null;
 }
 
-const { hero, whatsapp } = Astro.props;
+const { hero, whatsapp, casos } = Astro.props;
+const firstCase = casos?.casos?.[0];
+const microProofUrl = firstCase?.url?.trim() ?? '';
+const microProofLabel = firstCase?.nombre?.trim() || hero.microPruebaFallback?.trim() || hero.microPrueba.trim();
+const hasMicroProof = Boolean(microProofUrl && microProofLabel);
 const h1Sentences = hero.h1.trim().split(/(?<=\.)\s+/);
 const h1FirstSentence = h1Sentences[0] ?? hero.h1;
 const h1SecondSentence = h1Sentences.slice(1).join(' ');
@@ -33,7 +44,7 @@ const h1Tail = h1Words.slice(-3).join(' ');
 const h1Lead = h1Words.slice(0, -3).join(' ');
 ---
 
-<section class="hero" aria-labelledby="hero-title">
+<section class:list={['hero', { 'has-micro-proof': hasMicroProof }]} aria-labelledby="hero-title">
     <div class="hero-content">
       <p class="eyebrow">{hero.eyebrow}</p>
       <h1 id="hero-title">
@@ -58,9 +69,9 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
         />
         <p class="microcopy">{whatsapp.microcopy}</p>
       </div>
-      {hero.microPrueba.trim() && (
+      {hasMicroProof && (
         <p class="micro-proof">
-          <a href={hero.microPrueba.trim()}>{hero.microPrueba}</a>
+          <a href={microProofUrl}>{microProofLabel} <span aria-hidden="true">→</span></a>
         </p>
       )}
     </div>
@@ -163,7 +174,7 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
 
   @media (min-width: 900px) {
     .hero {
-      align-items: start;
+      align-items: center;
       grid-template-columns: 7fr 5fr;
       gap: var(--sp-8);
       padding-block: var(--sp-32);
@@ -176,6 +187,9 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
 
     .hero-diagram {
       min-width: 0;
+      max-width: 300px;
+      width: 100%;
+      justify-self: end;
     }
   }
 

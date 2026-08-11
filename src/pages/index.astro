@@ -2,12 +2,14 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
+import StickyCta from '../components/ui/StickyCta.astro';
 import site from '../content/site.json';
 ---
 
 <Base title={site.meta.title} description={site.meta.description}>
   <Header header={site.header} whatsapp={site.whatsapp} />
   <main>
-    <Hero hero={site.hero} whatsapp={site.whatsapp} />
+    <Hero hero={site.hero} whatsapp={site.whatsapp} casos={site.casos} />
   </main>
+  <StickyCta whatsapp={site.whatsapp} />
 </Base>

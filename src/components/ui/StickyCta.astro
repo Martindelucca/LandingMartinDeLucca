@@ -1,0 +1,82 @@
+---
+import WhatsappButton from './WhatsappButton.astro';
+
+interface Props {
+  whatsapp: {
+    numero: string;
+    etiquetaCta: string;
+    mensajes: {
+      sticky: string;
+    };
+  };
+}
+
+const { whatsapp } = Astro.props;
+---
+
+<aside class="sticky-cta" data-sticky-cta aria-label={whatsapp.etiquetaCta}>
+  <WhatsappButton
+    number={whatsapp.numero}
+    message={whatsapp.mensajes.sticky}
+    label={whatsapp.etiquetaCta}
+    origin="sticky"
+  />
+</aside>
+
+<script>
+  const stickyCta = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  const heroCta = document.querySelector<HTMLElement>('[data-origin="hero"]');
+
+  if (stickyCta && heroCta) {
+    let frame = 0;
+
+    const updateStickyVisibility = () => {
+      if (frame) return;
+
+      frame = window.requestAnimationFrame(() => {
+        frame = 0;
+        const rect = heroCta.getBoundingClientRect();
+        stickyCta.classList.toggle('is-hero-visible', rect.bottom > 0);
+      });
+    };
+
+    updateStickyVisibility();
+    window.addEventListener('scroll', updateStickyVisibility, { passive: true });
+    window.addEventListener('resize', updateStickyVisibility);
+  }
+</script>
+
+<style>
+  .sticky-cta {
+    background: var(--paper);
+    border-top: 1px solid var(--rule-strong);
+    bottom: 0;
+    left: 0;
+    padding: var(--sp-3) var(--sp-5) calc(var(--sp-3) + env(safe-area-inset-bottom));
+    position: fixed;
+    right: 0;
+    z-index: 10;
+  }
+
+  .sticky-cta :global(.whatsapp-button) {
+    width: 100%;
+  }
+
+  .sticky-cta.is-hero-visible {
+    opacity: 0;
+    pointer-events: none;
+    visibility: hidden;
+  }
+
+  @media (min-width: 900px) {
+    .sticky-cta {
+      display: none;
+    }
+  }
+
+  @media (max-width: 899px) {
+    :global(body) {
+      padding-bottom: calc(var(--sp-24) + var(--sp-12) + env(safe-area-inset-bottom));
+    }
+  }
+</style>

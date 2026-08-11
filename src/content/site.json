@@ -16,7 +16,7 @@
       "queConstruyo": "",
       "inversion": "",
       "final": "",
-      "sticky": ""
+      "sticky": "Hola Martin, te escribo desde tu página."
     }
   },
   "hero": {
@@ -24,6 +24,7 @@
     "h1": "Trabajás bien. Cuando te buscan, no se nota.",
     "bajada": "Diseño tu web para que te encuentren cuando te buscan, entiendan lo que hacés y confíen en tu negocio antes de escribirte.",
     "microPrueba": "",
+    "microPruebaFallback": "Un proyecto publicado y funcionando",
     "diagrama": {
       "estado": "HOY",
       "canales": "GOOGLE · INSTAGRAM · UN CONOCIDO",
@@ -32,7 +33,7 @@
         "TE ENCUENTRAN A MEDIAS",
         "NO TERMINAN DE ENTENDER",
         "DUDAN",
-        "«hola, info?»"
+        "DESAPARECEN"
       ]
     }
   },
