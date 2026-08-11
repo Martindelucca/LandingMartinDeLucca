@@ -1,0 +1,57 @@
+---
+import { siWhatsapp } from 'simple-icons';
+
+interface Props {
+  number: string;
+  message: string;
+  label: string;
+}
+
+const { number, message, label } = Astro.props;
+const href = `https://wa.me/${number}?text=${encodeURIComponent(message)}`;
+---
+
+<a class="whatsapp-button" href={href} target="_blank" rel="noopener" data-origin="hero">
+  <svg class="whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d={siWhatsapp.path}></path>
+  </svg>
+  <span>{label}</span>
+</a>
+
+<style>
+  .whatsapp-button {
+    align-items: center;
+    background: var(--green);
+    border: 1px solid var(--green);
+    border-radius: var(--radius);
+    color: var(--on-green);
+    display: inline-flex;
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    gap: var(--sp-3);
+    justify-content: center;
+    line-height: 1.2;
+    min-height: 52px;
+    padding: var(--sp-4) var(--sp-6);
+    text-decoration: none;
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  .whatsapp-button:hover {
+    background: var(--green-hover);
+    border-color: var(--green-hover);
+  }
+
+  .whatsapp-icon {
+    fill: currentColor;
+    height: var(--sp-6);
+    width: var(--sp-6);
+  }
+
+  @media (max-width: 599px) {
+    .whatsapp-button {
+      width: 100%;
+    }
+  }
+</style>

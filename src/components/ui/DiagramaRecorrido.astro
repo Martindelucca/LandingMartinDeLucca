@@ -1,0 +1,146 @@
+---
+interface Props {
+  estado: string;
+  nodos: string[];
+}
+
+const { estado, nodos } = Astro.props;
+---
+
+<div class="diagram-panel">
+  <p class="diagram-state">{estado}</p>
+  <ol class="diagram" aria-label={estado}>
+    {nodos.map((nodo, index) => (
+      <li class="diagram-node">
+        <span class="diagram-index">{String(index + 1).padStart(2, '0')}</span>
+        <span>{nodo}</span>
+      </li>
+    ))}
+  </ol>
+</div>
+
+<style>
+  .diagram-panel {
+    background-color: var(--paper-alt);
+    border: 1px solid var(--rule-strong);
+    min-width: 0;
+    padding: var(--sp-6);
+  }
+
+  .diagram-state {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin-bottom: var(--sp-6);
+  }
+
+  .diagram {
+    align-items: stretch;
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-3);
+    min-width: 0;
+  }
+
+  .diagram-node {
+    align-items: flex-start;
+    border: 1px dashed var(--text-muted);
+    border-radius: var(--radius);
+    color: var(--text-muted);
+    display: flex;
+    flex-direction: column;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 15px;
+    gap: var(--sp-2);
+    justify-content: flex-start;
+    line-height: 1.4;
+    min-height: 52px;
+    min-width: 0;
+    padding: var(--sp-4) var(--sp-5);
+    position: relative;
+  }
+
+  .diagram-index {
+    color: var(--text-muted);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+  }
+
+  .diagram-node:not(:last-child)::after {
+    color: var(--text-muted);
+    content: '↓';
+    font-family: 'Source Serif 4 Variable', Georgia, serif;
+    font-size: 20px;
+    left: 50%;
+    line-height: 1;
+    position: absolute;
+    top: calc(100% + var(--sp-2));
+    transform: translateX(-50%);
+    z-index: 1;
+  }
+
+  @media (min-width: 900px) {
+    .diagram-panel {
+      background-color: var(--paper);
+      background-image: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent calc(var(--sp-8) - 1px),
+        var(--grid) calc(var(--sp-8) - 1px),
+        var(--grid) var(--sp-8)
+      ), repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent calc(var(--sp-8) - 1px),
+        var(--grid) calc(var(--sp-8) - 1px),
+        var(--grid) var(--sp-8)
+      );
+      padding: var(--sp-8);
+    }
+
+    .diagram {
+      display: grid;
+      gap: var(--sp-8);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .diagram-node {
+      background: var(--paper);
+    }
+
+    .diagram-node:not(:last-child)::after {
+      content: '→';
+      left: calc(100% + var(--sp-4));
+      top: 50%;
+      transform: translateY(-50%);
+    }
+
+    .diagram-node:nth-child(2)::after {
+      content: '↓';
+      left: 50%;
+      top: calc(100% + var(--sp-2));
+      transform: translateX(-50%);
+    }
+
+    .diagram-node:nth-child(3)::after {
+      content: '←';
+      left: calc(-1 * var(--sp-4));
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .diagram-node:nth-child(3) {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    .diagram-node:nth-child(4) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+  }
+</style>

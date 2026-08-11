@@ -1,0 +1,46 @@
+{
+  "meta": {
+    "title": "Landing para negocios de servicios | Martin De Lucca",
+    "description": "Una página para que encuentren tu negocio, te tomen en serio y te escriban sabiendo qué ofrecés.",
+    "ogImage": ""
+  },
+  "whatsapp": {
+    "numero": "5493524401654",
+    "etiquetaCta": "Contame tu caso por WhatsApp",
+    "microcopy": "Te contesto yo, no un bot.",
+    "mensajes": {
+      "hero": "Hola Martin, vi tu página y quiero contarte mi caso.",
+      "queConstruyo": "",
+      "inversion": "",
+      "final": "",
+      "sticky": ""
+    }
+  },
+  "hero": {
+    "eyebrow": "CÓRDOBA / NEGOCIOS DE SERVICIOS",
+    "h1": "Trabajás bien. Cuando te buscan, no se nota.",
+    "bajada": "Armo una página para que te encuentren cuando te buscan, te tomen en serio cuando te miran, y te escriban sabiendo qué ofrecés. Para negocios de servicios que ya consiguen clientes y cierran todo a mano.",
+    "microPrueba": "",
+    "diagrama": {
+      "estado": "HOY",
+      "nodos": [
+        "Instagram",
+        "DM «hola, info?»",
+        "explicás todo de cero",
+        "algunos desaparecen"
+      ]
+    }
+  },
+  "problema": null,
+  "solucion": null,
+  "queConstruyo": null,
+  "incluye": null,
+  "proceso": null,
+  "casos": null,
+  "quienSoy": null,
+  "inversion": null,
+  "noEsParaVos": null,
+  "faq": [],
+  "ctaFinal": null,
+  "footer": null
+}

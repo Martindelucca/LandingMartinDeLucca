@@ -1,0 +1,146 @@
+---
+import WhatsappButton from './ui/WhatsappButton.astro';
+import DiagramaRecorrido from './ui/DiagramaRecorrido.astro';
+
+interface Props {
+  hero: {
+    eyebrow: string;
+    h1: string;
+    bajada: string;
+    microPrueba: string;
+    diagrama: {
+      estado: string;
+      nodos: string[];
+    };
+  };
+  whatsapp: {
+    numero: string;
+    etiquetaCta: string;
+    microcopy: string;
+    mensajes: {
+      hero: string;
+    };
+  };
+}
+
+const { hero, whatsapp } = Astro.props;
+---
+
+<section class="hero" aria-labelledby="hero-title">
+    <div class="hero-content">
+      <p class="eyebrow">{hero.eyebrow}</p>
+      <h1 id="hero-title">{hero.h1}</h1>
+      <p class="hero-lede">{hero.bajada}</p>
+      <div class="hero-action">
+        <WhatsappButton
+          number={whatsapp.numero}
+          message={whatsapp.mensajes.hero}
+          label={whatsapp.etiquetaCta}
+        />
+        <p class="microcopy">{whatsapp.microcopy}</p>
+      </div>
+      {hero.microPrueba && <p class="micro-proof">{hero.microPrueba}</p>}
+    </div>
+    <div class="hero-diagram">
+      <DiagramaRecorrido estado={hero.diagrama.estado} nodos={hero.diagrama.nodos} />
+    </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--sp-12);
+    margin-inline: auto;
+    max-width: 1120px;
+    padding: var(--sp-12) var(--sp-5) var(--sp-16);
+  }
+
+  .hero-content {
+    max-width: 34rem;
+  }
+
+  .eyebrow {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    line-height: 1.2;
+    margin-bottom: var(--sp-4);
+    text-transform: uppercase;
+  }
+
+  h1 {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: clamp(2.125rem, 8vw, 2.5rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.06;
+    max-width: 12ch;
+  }
+
+  .hero-lede {
+    font-size: 19px;
+    line-height: 1.5;
+    margin-top: var(--sp-4);
+    max-width: 34rem;
+  }
+
+  @media (min-width: 900px) {
+    .hero-lede {
+      font-size: 22px;
+    }
+  }
+
+  .hero-action {
+    margin-top: var(--sp-6);
+  }
+
+  .microcopy {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    margin-top: var(--sp-3);
+  }
+
+  .micro-proof {
+    color: var(--text-muted);
+    font-size: 15px;
+    line-height: 1.5;
+    margin-top: var(--sp-6);
+  }
+
+  @media (min-width: 600px) {
+    .hero {
+      padding-inline: var(--sp-8);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 6vw, 3.5rem);
+    }
+  }
+
+  @media (min-width: 900px) {
+    .hero {
+      align-items: center;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: var(--sp-8);
+      padding-block: var(--sp-16);
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 5vw, 4rem);
+    }
+
+    .hero-diagram {
+      min-width: 0;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .hero {
+      padding-block: var(--sp-24);
+    }
+  }
+</style>
