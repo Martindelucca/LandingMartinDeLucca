@@ -173,9 +173,15 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
   }
 
   @media (min-width: 900px) {
+    :global(html),
+    :global(body) {
+      overflow-x: clip;
+    }
+
     .hero {
-      align-items: center;
-      grid-template-columns: 7fr 5fr;
+      --hero-bleed: calc((100vw - min(1120px, 100vw)) / 2 + var(--sp-8));
+      align-items: start;
+      grid-template-columns: minmax(0, 7fr) minmax(374px, 5fr);
       gap: var(--sp-8);
       padding-block: var(--sp-32);
       padding-inline: var(--sp-8);
@@ -186,10 +192,24 @@ const h1Lead = h1Words.slice(0, -3).join(' ');
     }
 
     .hero-diagram {
+      align-self: stretch;
       min-width: 0;
-      max-width: 300px;
+      margin-right: calc(var(--hero-bleed) * -1);
+      position: relative;
+      width: calc(100% + var(--hero-bleed));
+    }
+
+    .hero-diagram::before {
+      background: var(--rule);
+      content: '';
+      inset-block: 0;
+      left: calc(var(--sp-8) / -2);
+      position: absolute;
+      width: 1px;
+    }
+
+    .hero-diagram :global(.diagram-panel) {
       width: 100%;
-      justify-self: end;
     }
   }
 

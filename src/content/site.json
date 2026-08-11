@@ -42,7 +42,18 @@
   "queConstruyo": null,
   "incluye": null,
   "proceso": null,
-  "casos": null,
+  "casos": {
+    "titulo": "",
+    "casos": [
+      {
+        "nombre": "Sin Brújula Viajes",
+        "problema": "",
+        "decisiones": [],
+        "url": "https://sinbrujulaviajes.com.ar/"
+      }
+    ],
+    "testimonios": []
+  },
   "quienSoy": null,
   "inversion": null,
   "noEsParaVos": null,
