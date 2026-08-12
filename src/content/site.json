@@ -59,7 +59,7 @@
       {
         "numero": "01",
         "titulo": "TE ENCUENTRAN",
-        "texto": "Cuando alguien te recomienda, lo primero que hace esa persona es buscarte. Hoy encuentra un perfil. Quiero que encuentre tu negocio: sitio propio, ficha de Google configurada y conectada, y todo escrito de forma que un buscador —o un asistente de IA— pueda entender qué hacés y dónde."
+        "texto": "Cuando alguien te recomienda, lo primero que hace es buscarte. Hoy encuentra un perfil. Quiero que encuentre tu negocio: sitio propio, ficha de Google y todo escrito para que un buscador o una IA entiendan qué hacés."
       },
       {
         "numero": "02",
@@ -69,11 +69,35 @@
       {
         "numero": "03",
         "titulo": "TE ESCRIBEN MEJOR",
-        "texto": "Que cuando te escriban ya sepan qué ofrecés, cómo trabajás y cuánto sale, en vez de arrancar cada conversación de cero."
+        "texto": "Que cuando te escriban ya sepan qué ofrecés, cómo trabajás y cuánto sale. En vez de arrancar cada conversación de cero, empezás donde antes terminabas."
       }
     ]
   },
-  "solucion": null,
+  "solucion": {
+    "numero": "03",
+    "titulo": "RECORRIDO",
+    "fraseInstagram": "No quiero reemplazar tu Instagram. Quiero aprovechar mejor a la gente que ya te busca — ahí y en todos lados.",
+    "diagrama": {
+      "antesEtiqueta": "ANTES",
+      "despuesEtiqueta": "DESPUÉS",
+      "canales": "GOOGLE · INSTAGRAM · UN CONOCIDO",
+      "antes": [
+        "Te buscan",
+        "Te encuentran a medias",
+        "No terminan de entender",
+        "Dudan",
+        "Desaparecen"
+      ],
+      "despues": [
+        "Te buscan",
+        "Te encuentran",
+        "Entienden",
+        "Confían",
+        "Te escriben"
+      ]
+    },
+    "cierre": "La web es el vehículo. Lo que armo es el recorrido."
+  },
   "queConstruyo": null,
   "incluye": null,
   "proceso": null,
