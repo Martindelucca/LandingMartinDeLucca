@@ -83,7 +83,45 @@
       "placeholder": "Captura real pendiente"
     }
   },
-  "incluye": null,
+  "incluye": {
+    "titulo": "QUÉ INCLUYE",
+    "bloques": [
+      {
+        "titulo": "BLOQUE 01 · ANTES DE DISEÑAR",
+        "items": [
+          "Análisis del negocio",
+          "Análisis del cliente ideal",
+          "Estructura estratégica"
+        ]
+      },
+      {
+        "titulo": "BLOQUE 02 · LA PÁGINA",
+        "items": [
+          "Copy orientado a consultas — no necesitás traer los textos",
+          "Diseño propio, no plantilla",
+          "Desarrollo para celular y computadora",
+          "Integración con WhatsApp"
+        ]
+      },
+      {
+        "titulo": "BLOQUE 03 · PARA QUE TE ENCUENTREN",
+        "items": [
+          "Ficha de Google configurada y conectada al sitio",
+          "Datos estructurados para buscadores y asistentes de IA",
+          "Sitio rápido e indexable",
+          "Contenido en formato pregunta-respuesta"
+        ]
+      },
+      {
+        "titulo": "BLOQUE 04 · PUESTA EN MARCHA",
+        "items": [
+          "Dominio, hosting y publicación explicados",
+          "Analítica básica",
+          "Entrega funcionando"
+        ]
+      }
+    ]
+  },
   "proceso": null,
   "casos": {
     "titulo": "",

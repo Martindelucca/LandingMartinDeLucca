@@ -1,0 +1,120 @@
+---
+interface Props {
+  numero: string;
+  incluye: {
+    titulo: string;
+    bloques: Array<{
+      titulo: string;
+      items: string[];
+    }>;
+  };
+}
+
+const { numero, incluye } = Astro.props;
+---
+
+<section class="includes-section" id="incluye" aria-labelledby="includes-title">
+  <h2 id="includes-title" class="section-label">{numero} / {incluye.titulo}</h2>
+  <div class="includes-grid">
+    {incluye.bloques.map((bloque) => (
+      <article class="include-block">
+        <p class="block-label">{bloque.titulo.split(' · ')[0]}</p>
+        <h3>{bloque.titulo.split(' · ')[1]}</h3>
+        <ul>
+          {bloque.items.map((item) => <li>{item}</li>)}
+        </ul>
+      </article>
+    ))}
+  </div>
+</section>
+
+<style>
+  .includes-section {
+    border-bottom: 1px solid var(--rule);
+    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+  }
+
+  .section-label {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-6);
+    text-transform: uppercase;
+  }
+
+  .includes-grid {
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    display: grid;
+    gap: 1px;
+    grid-template-columns: 1fr;
+  }
+
+  .include-block {
+    background: var(--paper);
+    min-width: 0;
+    padding: var(--sp-6);
+  }
+
+  h3 {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0 0 var(--sp-4);
+  }
+
+  .block-label {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-2);
+    text-transform: uppercase;
+  }
+
+  ul {
+    display: grid;
+    gap: var(--sp-2);
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  li {
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 900px) {
+    .includes-section {
+      padding-block: calc(var(--sp-12) + var(--sp-2));
+      padding-inline: calc(var(--sp-8) + var(--sp-2));
+    }
+
+    .section-label {
+      margin-bottom: var(--sp-8);
+    }
+
+    h3 {
+      font-size: 24px;
+    }
+
+    .includes-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .includes-section {
+      padding-inline: var(--sp-16);
+    }
+  }
+</style>
