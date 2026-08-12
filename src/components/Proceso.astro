@@ -25,6 +25,7 @@ const { numero, proceso } = Astro.props;
 
 <section class="process-section" id="proceso" aria-labelledby="process-title">
   <h2 id="process-title" class="section-label">{numero} / {proceso.titulo}</h2>
+
   <table class="process-table" aria-labelledby="process-title">
     <thead>
       <tr>
@@ -39,23 +40,66 @@ const { numero, proceso } = Astro.props;
         <tr>
           <td class="step-number">{String(paso.n).padStart(2, '0')}</td>
           <td class="step-title">{paso.queePasa}</td>
-          <td>
-            <span class="mobile-label">{proceso.etiquetas.deVos}:</span>
-            <span>{paso.queNecesito}</span>
-          </td>
-          <td>
-            <span class="mobile-label">{proceso.etiquetas.cuando}:</span>
-            <span>{paso.cuando}</span>
-          </td>
+          <td>{paso.queNecesito}</td>
+          <td>{paso.cuando}</td>
         </tr>
       ))}
     </tbody>
   </table>
+
+  <ol class="mobile-rail" aria-label={proceso.titulo}>
+    {proceso.pasos.map((paso, index) => (
+      <li class="mobile-rail__step" style={`--i: ${index}`}>
+        <span class="mobile-rail__when">{paso.cuando}</span>
+        <h3 class="mobile-rail__title">{paso.queePasa}</h3>
+        <p class="mobile-rail__you">
+          <span class="mobile-rail__label">{proceso.etiquetas.deVos}:</span> {paso.queNecesito}
+        </p>
+      </li>
+    ))}
+  </ol>
+
   <p class="process-closing">
     <span>{proceso.garantia}</span>
     <span>{proceso.soporte}</span>
   </p>
 </section>
+
+<script>
+  const initMobileProcesoRail = () => {
+    const rail = document.querySelector<HTMLElement>('#proceso .mobile-rail');
+
+    if (
+      !rail ||
+      rail.dataset.reveal !== undefined ||
+      !('IntersectionObserver' in window) ||
+      !('matchMedia' in window)
+    ) {
+      return;
+    }
+
+    rail.dataset.reveal = '';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      rail.classList.add('is-visible');
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          rail.classList.add('is-visible');
+          observer.unobserve(rail);
+        }
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    observer.observe(rail);
+  };
+
+  initMobileProcesoRail();
+</script>
 
 <style>
   .process-section {
@@ -141,14 +185,8 @@ const { numero, proceso } = Astro.props;
     font-weight: 600;
   }
 
-  .mobile-label {
-    color: var(--text);
+  .mobile-rail {
     display: none;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
   }
 
   .process-closing {
@@ -157,7 +195,6 @@ const { numero, proceso } = Astro.props;
     flex-wrap: wrap;
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    font-weight: 400;
     gap: var(--sp-2);
     line-height: 1.6;
     margin: var(--sp-8) 0 0;
@@ -181,46 +218,109 @@ const { numero, proceso } = Astro.props;
   }
 
   @media (max-width: 899px) {
-    .process-table,
-    .process-table tbody,
-    .process-table tr,
-    .process-table td {
-      display: block;
-    }
-
-    .process-table thead {
+    .process-table {
       display: none;
     }
 
-    .process-table tr {
-      padding: 20px 0;
-    }
-
-    .process-table tbody tr + tr {
-      border-top: 1px solid var(--rule);
-    }
-
-    .process-table td,
-    .process-table td:first-child,
-    .process-table td:nth-child(2),
-    .process-table td:nth-child(3),
-    .process-table td:last-child {
-      padding: 0;
-      width: auto;
-    }
-
-    .process-table td + td {
-      margin-top: var(--sp-3);
-    }
-
-    .step-number {
+    .mobile-rail {
       display: block;
-      margin-bottom: var(--sp-3);
+      list-style: none;
+      margin: 0;
+      padding: 0;
     }
 
-    .mobile-label {
-      display: inline;
-      margin-right: var(--sp-2);
+    .mobile-rail__step {
+      min-width: 0;
+      padding-block-end: var(--sp-12);
+      padding-inline-start: var(--sp-8);
+      position: relative;
+    }
+
+    .mobile-rail__step:last-child {
+      padding-block-end: 0;
+    }
+
+    .mobile-rail__step::before {
+      background: var(--rule-hard);
+      bottom: calc(var(--sp-3) - var(--sp-12));
+      content: '';
+      inline-size: 1px;
+      inset-inline-start: var(--sp-2);
+      opacity: 0.28;
+      position: absolute;
+      top: var(--sp-3);
+    }
+
+    .mobile-rail__step:last-child::before {
+      display: none;
+    }
+
+    .mobile-rail__step::after {
+      background: var(--green);
+      border-radius: var(--radius);
+      content: '';
+      block-size: var(--sp-4);
+      inline-size: var(--sp-4);
+      inset-inline-start: 0;
+      position: absolute;
+      top: var(--sp-2);
+    }
+
+    .mobile-rail__when {
+      color: var(--green);
+      display: block;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      line-height: 1.2;
+      text-transform: uppercase;
+    }
+
+    .mobile-rail__title {
+      color: var(--text-strong);
+      font-family: 'Archivo Variable', Arial, sans-serif;
+      font-size: 20px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      line-height: 1.2;
+      margin: var(--sp-2) 0;
+    }
+
+    .mobile-rail__you {
+      color: var(--text);
+      font-size: 17px;
+      line-height: 1.6;
+      margin: 0;
+      max-width: 34ch;
+    }
+
+    .mobile-rail__label {
+      color: var(--text);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .mobile-rail[data-reveal] .mobile-rail__step {
+        opacity: 0;
+        transform: translateY(var(--sp-3));
+      }
+
+      .mobile-rail[data-reveal].is-visible .mobile-rail__step {
+        animation: proceso-step-in 400ms ease-out forwards;
+        animation-delay: calc(var(--i) * 80ms);
+      }
+
+      @keyframes proceso-step-in {
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
     }
   }
 
