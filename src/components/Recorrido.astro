@@ -4,51 +4,31 @@ interface Props {
   recorrido: {
     titulo: string;
     fraseInstagram: string;
+    puente: string;
     diagrama: {
-      antesEtiqueta: string;
-      despuesEtiqueta: string;
       canales: string;
-      antes: string[];
-      despues: string[];
+      nodos: string[];
     };
     cierre: string;
   };
 }
 
 const { numero, recorrido } = Astro.props;
-const rows = [
-  {
-    etiqueta: recorrido.diagrama.antesEtiqueta,
-    nodos: recorrido.diagrama.antes,
-    estado: 'before',
-  },
-  {
-    etiqueta: recorrido.diagrama.despuesEtiqueta,
-    nodos: recorrido.diagrama.despues,
-    estado: 'after',
-  },
-];
 ---
 
 <section class="recorrido" id="recorrido" aria-labelledby="recorrido-title">
   <p class="section-label">{numero} / {recorrido.titulo}</p>
   <h2 id="recorrido-title">{recorrido.fraseInstagram}</h2>
-  <div class="route-comparison">
-    {rows.map((row, rowIndex) => (
-      <div class:list={['route-row', `route-row--${row.estado}`]}>
-        <p class="route-label" id={`route-label-${row.estado}`}>{row.etiqueta}</p>
-        <ol class="route-nodes" aria-labelledby={`route-label-${row.estado}`}>
-          {row.nodos.map((nodo, index) => (
-            <li class="route-node">
-              <span class="route-number">{String(index + 1).padStart(2, '0')}</span>
-              <span class="route-text">{nodo}</span>
-              {rowIndex === 0 && index === 0 && <span class="route-channels">{recorrido.diagrama.canales}</span>}
-            </li>
-          ))}
-        </ol>
-      </div>
+  <p class="route-bridge">{recorrido.puente}</p>
+  <ol class="route-nodes" aria-labelledby="recorrido-title">
+    {recorrido.diagrama.nodos.map((nodo, index) => (
+      <li class="route-node">
+        <span class="route-number">{String(index + 1).padStart(2, '0')}</span>
+        <span class="route-text">{nodo}</span>
+        {index === 0 && <span class="route-channels">{recorrido.diagrama.canales}</span>}
+      </li>
     ))}
-  </div>
+  </ol>
   <p class="route-closing">{recorrido.cierre}</p>
 </section>
 
@@ -61,7 +41,6 @@ const rows = [
   }
 
   .section-label,
-  .route-label,
   .route-number,
   .route-channels {
     color: var(--green-light);
@@ -87,17 +66,11 @@ const rows = [
     margin: 0;
   }
 
-  .route-comparison {
-    margin-top: var(--sp-6);
-  }
-
-  .route-row + .route-row {
-    margin-top: 0;
-  }
-
-  .route-label {
-    padding-top: var(--sp-6);
-    margin: 0 0 var(--sp-3);
+  .route-bridge {
+    color: var(--text-on-ink-muted);
+    font-size: 17px;
+    line-height: 1.6;
+    margin: var(--sp-6) 0 var(--sp-8);
   }
 
   .route-nodes {
@@ -111,9 +84,9 @@ const rows = [
   }
 
   .route-node {
-    border: 1px dashed var(--text-on-ink-muted);
+    border: 1px solid var(--green);
     border-radius: var(--radius);
-    color: var(--text-on-ink-muted);
+    color: var(--text-on-ink);
     display: flex;
     flex-direction: column;
     gap: var(--sp-2);
@@ -135,27 +108,18 @@ const rows = [
     overflow-wrap: anywhere;
   }
 
-  .route-row--after .route-node {
-    border-style: solid;
-    border-color: var(--green);
-    color: var(--text-on-ink);
-  }
-
-  .route-row--after .route-number {
+  .route-number {
     color: var(--green-light);
   }
 
-  .route-row--before .route-number {
-    color: var(--text-on-ink-muted);
-  }
-
-  .route-row--after .route-node:last-child {
+  .route-node:last-child {
     background: var(--green);
     border-color: var(--green);
     color: var(--on-green);
   }
 
-  .route-row--after .route-node:last-child .route-number {
+  .route-node:last-child .route-number,
+  .route-node:last-child .route-channels {
     color: var(--on-green);
   }
 
@@ -166,7 +130,6 @@ const rows = [
     font-weight: 600;
     line-height: 1.25;
     margin: var(--sp-8) 0 0;
-    max-width: 70%;
   }
 
   @media (min-width: 900px) {
