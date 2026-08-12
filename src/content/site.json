@@ -125,6 +125,8 @@
   "proceso": {
     "titulo": "CÓMO TRABAJAMOS",
     "etiquetas": {
+      "paso": "PASO",
+      "quePasa": "QUÉ PASA",
       "deVos": "DE VOS",
       "cuando": "CUÁNDO"
     },
