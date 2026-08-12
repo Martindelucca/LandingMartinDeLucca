@@ -3,6 +3,7 @@ import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Problema from '../components/Problema.astro';
+import QueConstruyo from '../components/QueConstruyo.astro';
 import Recorrido from '../components/Recorrido.astro';
 import StickyCta from '../components/ui/StickyCta.astro';
 import site from '../content/site.json';
@@ -10,6 +11,7 @@ import site from '../content/site.json';
 const visibleSections = [
   ...(site.problema ? ['problema'] : []),
   ...(site.solucion ? ['recorrido'] : []),
+  ...(site.queConstruyo ? ['queConstruyo'] : []),
 ];
 
 const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).padStart(2, '0');
@@ -21,6 +23,13 @@ const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).
     <Hero hero={site.hero} whatsapp={site.whatsapp} casos={site.casos} />
     {site.problema && <Problema numero={sectionNumber('problema')} problema={site.problema} />}
     {site.solucion && <Recorrido numero={sectionNumber('recorrido')} recorrido={site.solucion} />}
+    {site.queConstruyo && (
+      <QueConstruyo
+        numero={sectionNumber('queConstruyo')}
+        queConstruyo={site.queConstruyo}
+        whatsapp={site.whatsapp}
+      />
+    )}
   </main>
   <StickyCta whatsapp={site.whatsapp} />
 </Base>

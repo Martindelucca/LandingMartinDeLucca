@@ -14,7 +14,7 @@
     "microcopy": "Te contesto yo, no un bot.",
     "mensajes": {
       "hero": "Hola Martin, vi tu página y quiero contarte mi caso.",
-      "queConstruyo": "",
+      "queConstruyo": "Hola Martin, vi lo que armás y quiero saber si me sirve.",
       "inversion": "",
       "final": "",
       "sticky": "Hola Martin, te escribo desde tu página."
@@ -75,7 +75,22 @@
     },
     "cierre": "La web es el vehículo. Lo que armo es el recorrido: que te encuentren cuando te buscan, que vean un negocio y no un perfil, y que te escriban sabiendo qué ofrecés."
   },
-  "queConstruyo": null,
+  "queConstruyo": {
+    "titulo": "QUÉ CONSTRUYO",
+    "producto": "Página para negocios de servicios",
+    "metodo": [
+      "ANALIZO TU CLIENTE",
+      "ORDENO LA OFERTA",
+      "ESCRIBO Y DISEÑO",
+      "TE PONGO EN GOOGLE",
+      "CONECTO CON WHATSAPP"
+    ],
+    "captura": {
+      "src": "",
+      "alt": "",
+      "placeholder": "Captura real pendiente"
+    }
+  },
   "incluye": null,
   "proceso": null,
   "casos": {

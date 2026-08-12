@@ -1,0 +1,193 @@
+---
+import WhatsappButton from './ui/WhatsappButton.astro';
+
+interface Props {
+  numero: string;
+  queConstruyo: {
+    titulo: string;
+    producto: string;
+    metodo: string[];
+    captura: {
+      src: string;
+      alt: string;
+      placeholder: string;
+    };
+  };
+  whatsapp: {
+    numero: string;
+    etiquetaCta: string;
+    mensajes: {
+      queConstruyo: string;
+    };
+  };
+}
+
+const { numero, queConstruyo, whatsapp } = Astro.props;
+---
+
+<section class="build-section" id="que-construyo" aria-labelledby="build-title">
+  <div class="build-copy">
+    <p class="section-label">{numero} / {queConstruyo.titulo}</p>
+    <h2 id="build-title">{queConstruyo.producto}</h2>
+    <ol class="method-list" aria-label={queConstruyo.producto}>
+      {queConstruyo.metodo.map((paso, index) => (
+        <li>
+          <span class="method-number">{String(index + 1).padStart(2, '0')}</span>
+          <span class="method-text">{paso}</span>
+        </li>
+      ))}
+    </ol>
+    <div class="build-cta">
+      <WhatsappButton
+        number={whatsapp.numero}
+        message={whatsapp.mensajes.queConstruyo}
+        label={whatsapp.etiquetaCta}
+        origin="queConstruyo"
+      />
+    </div>
+  </div>
+
+  <div class="build-capture">
+    <div class="phone-frame">
+      {queConstruyo.captura.src ? (
+        <img class="phone-screen" src={queConstruyo.captura.src} alt={queConstruyo.captura.alt} />
+      ) : (
+        <div class="phone-screen capture-placeholder" role="img" aria-label={queConstruyo.captura.placeholder}>
+          <span>{queConstruyo.captura.placeholder}</span>
+        </div>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .build-section {
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    gap: var(--sp-8);
+    grid-template-columns: 1fr;
+    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+  }
+
+  .section-label {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-6);
+    text-transform: uppercase;
+  }
+
+  h2 {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  .method-list {
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    display: grid;
+    gap: 1px;
+    list-style: none;
+    margin: var(--sp-8) 0 0;
+    padding: 0;
+  }
+
+  .method-list li {
+    align-items: start;
+    background: var(--paper);
+    display: grid;
+    gap: var(--sp-3);
+    grid-template-columns: auto minmax(0, 1fr);
+    padding: 14px var(--sp-4);
+  }
+
+  .method-number,
+  .method-text,
+  .capture-placeholder {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .method-number {
+    color: var(--green);
+  }
+
+  .method-text {
+    color: var(--text-strong);
+    font-weight: 500;
+  }
+
+  .build-cta {
+    margin-top: var(--sp-8);
+  }
+
+  .build-cta .whatsapp-button {
+    width: 100%;
+  }
+
+  .build-capture {
+    display: grid;
+    place-items: center;
+  }
+
+  .phone-frame {
+    background: var(--panel);
+    border: 1px solid var(--rule-hard);
+    border-radius: var(--radius);
+    padding: var(--sp-3);
+    width: min(100%, 20rem);
+    aspect-ratio: 9 / 16;
+  }
+
+  .phone-screen {
+    border: 1px dashed var(--rule-hard);
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+  }
+
+  .capture-placeholder {
+    align-items: center;
+    color: var(--text);
+    display: flex;
+    justify-content: center;
+    padding: var(--sp-4);
+    text-align: center;
+  }
+
+  @media (min-width: 900px) {
+    .build-section {
+      column-gap: var(--sp-12);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      padding-block: calc(var(--sp-12) + var(--sp-2));
+      padding-inline: calc(var(--sp-8) + var(--sp-2));
+    }
+
+    h2 {
+      font-size: 38px;
+    }
+
+    .build-capture {
+      align-self: start;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .build-section {
+      padding-inline: var(--sp-16);
+    }
+  }
+</style>
