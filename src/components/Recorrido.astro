@@ -1,7 +1,7 @@
 ---
 interface Props {
+  numero: string;
   recorrido: {
-    numero: string;
     titulo: string;
     fraseInstagram: string;
     diagrama: {
@@ -15,7 +15,7 @@ interface Props {
   };
 }
 
-const { recorrido } = Astro.props;
+const { numero, recorrido } = Astro.props;
 const rows = [
   {
     etiqueta: recorrido.diagrama.antesEtiqueta,
@@ -31,7 +31,7 @@ const rows = [
 ---
 
 <section class="recorrido" id="recorrido" aria-labelledby="recorrido-title">
-  <p class="section-label">{recorrido.numero} / {recorrido.titulo}</p>
+  <p class="section-label">{numero} / {recorrido.titulo}</p>
   <h2 id="recorrido-title">{recorrido.fraseInstagram}</h2>
   <div class="route-comparison">
     {rows.map((row, rowIndex) => (
@@ -55,7 +55,7 @@ const rows = [
 <style>
   .recorrido {
     background: var(--ink);
-    border-bottom: 1px solid var(--rule-hard);
+    border-bottom: 1px solid var(--rule);
     color: var(--text-on-ink);
     padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
   }
@@ -88,18 +88,20 @@ const rows = [
   }
 
   .route-comparison {
-    margin-top: var(--sp-8);
+    margin-top: var(--sp-6);
   }
 
   .route-row + .route-row {
-    margin-top: var(--sp-8);
+    margin-top: 0;
   }
 
   .route-label {
+    padding-top: var(--sp-6);
     margin: 0 0 var(--sp-3);
   }
 
   .route-nodes {
+    align-items: start;
     display: grid;
     gap: var(--sp-3);
     grid-template-columns: 1fr;
@@ -143,6 +145,10 @@ const rows = [
     color: var(--green-light);
   }
 
+  .route-row--before .route-number {
+    color: var(--text-on-ink-muted);
+  }
+
   .route-row--after .route-node:last-child {
     background: var(--green);
     border-color: var(--green);
@@ -160,7 +166,7 @@ const rows = [
     font-weight: 600;
     line-height: 1.25;
     margin: var(--sp-8) 0 0;
-    max-width: 34rem;
+    max-width: 70%;
   }
 
   @media (min-width: 900px) {

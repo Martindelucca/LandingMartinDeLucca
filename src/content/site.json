@@ -40,7 +40,6 @@
     }
   },
   "problema": {
-    "numero": "01",
     "titulo": "PROBLEMA",
       "citas": [
         "«Me recomendaron, me buscaron en Google y no encontraron nada mío.»",
@@ -52,29 +51,7 @@
     ],
     "puente": "El problema no es que te falte una página. Es que tu negocio existe en un solo lugar."
   },
-  "mecanismos": {
-    "numero": "02",
-    "titulo": "QUÉ CAMBIA",
-    "bloques": [
-      {
-        "numero": "01",
-        "titulo": "TE ENCUENTRAN",
-        "texto": "Cuando alguien te recomienda, lo primero que hace es buscarte. Hoy encuentra un perfil. Quiero que encuentre tu negocio: sitio propio, ficha de Google y todo escrito para que un buscador o una IA entiendan qué hacés."
-      },
-      {
-        "numero": "02",
-        "titulo": "TE TOMAN EN SERIO",
-        "texto": "El que llega tiene que ver un negocio, no un perfil improvisado. La diferencia entre \"me lo recomendaron\" y \"sí, se ve serio\" se juega en los primeros diez segundos."
-      },
-      {
-        "numero": "03",
-        "titulo": "TE ESCRIBEN MEJOR",
-        "texto": "Que cuando te escriban ya sepan qué ofrecés, cómo trabajás y cuánto sale. En vez de arrancar cada conversación de cero, empezás donde antes terminabas."
-      }
-    ]
-  },
   "solucion": {
-    "numero": "03",
     "titulo": "RECORRIDO",
     "fraseInstagram": "No quiero reemplazar tu Instagram. Quiero aprovechar mejor a la gente que ya te busca — ahí y en todos lados.",
     "diagrama": {
@@ -96,7 +73,7 @@
         "Te escriben"
       ]
     },
-    "cierre": "La web es el vehículo. Lo que armo es el recorrido."
+    "cierre": "La web es el vehículo. Lo que armo es el recorrido: que te encuentren cuando te buscan, que vean un negocio y no un perfil, y que te escriban sabiendo qué ofrecés."
   },
   "queConstruyo": null,
   "incluye": null,

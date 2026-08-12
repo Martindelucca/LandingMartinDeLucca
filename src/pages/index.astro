@@ -4,18 +4,23 @@ import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Problema from '../components/Problema.astro';
 import Recorrido from '../components/Recorrido.astro';
-import Solucion from '../components/Solucion.astro';
 import StickyCta from '../components/ui/StickyCta.astro';
 import site from '../content/site.json';
+
+const visibleSections = [
+  ...(site.problema ? ['problema'] : []),
+  ...(site.solucion ? ['recorrido'] : []),
+];
+
+const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).padStart(2, '0');
 ---
 
 <Base title={site.meta.title} description={site.meta.description}>
   <Header header={site.header} whatsapp={site.whatsapp} />
   <main>
     <Hero hero={site.hero} whatsapp={site.whatsapp} casos={site.casos} />
-    {site.problema && <Problema problema={site.problema} />}
-    {site.mecanismos && <Solucion mecanismos={site.mecanismos} />}
-    {site.solucion && <Recorrido recorrido={site.solucion} />}
+    {site.problema && <Problema numero={sectionNumber('problema')} problema={site.problema} />}
+    {site.solucion && <Recorrido numero={sectionNumber('recorrido')} recorrido={site.solucion} />}
   </main>
   <StickyCta whatsapp={site.whatsapp} />
 </Base>

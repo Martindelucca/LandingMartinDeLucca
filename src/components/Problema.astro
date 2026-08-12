@@ -1,18 +1,18 @@
 ---
 interface Props {
+  numero: string;
   problema: {
-    numero: string;
     titulo: string;
     citas: string[];
     puente: string;
   };
 }
 
-const { problema } = Astro.props;
+const { numero, problema } = Astro.props;
 ---
 
 <section class="problema" id="problema" aria-labelledby="problema-title">
-  <h2 id="problema-title" class="section-label">{problema.numero} / {problema.titulo}</h2>
+  <h2 id="problema-title" class="section-label">{numero} / {problema.titulo}</h2>
   <div class="problem-quotes">
     {problema.citas.map((cita) => <p><span>{cita}</span></p>)}
   </div>
