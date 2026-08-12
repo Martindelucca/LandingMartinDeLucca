@@ -31,9 +31,8 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
     <h2 id="build-title">{queConstruyo.producto}</h2>
     <ol class="method-list" aria-label={queConstruyo.producto}>
       {queConstruyo.metodo.map((paso, index) => (
-        <li>
-          <span class="method-number">{String(index + 1).padStart(2, '0')}</span>
-          <span class="method-text">{paso}</span>
+        <li class:list={{ 'method-chip': true, 'method-chip--last': index === queConstruyo.metodo.length - 1 }}>
+          {paso}
         </li>
       ))}
     </ol>
@@ -62,11 +61,16 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
 
 <style>
   .build-section {
+    align-items: center;
     border-bottom: 1px solid var(--rule);
     display: grid;
-    gap: var(--sp-8);
+    gap: calc(var(--sp-8) + var(--sp-2));
     grid-template-columns: 1fr;
     padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+  }
+
+  .build-copy {
+    min-width: 0;
   }
 
   .section-label {
@@ -76,83 +80,77 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
     font-weight: 500;
     letter-spacing: 0.08em;
     line-height: 1.2;
-    margin: 0 0 var(--sp-6);
+    margin: 0 0 var(--sp-5);
     text-transform: uppercase;
   }
 
   h2 {
     color: var(--text-strong);
     font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 28px;
+    font-size: 34px;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     line-height: 1.12;
-    margin: 0;
-    max-width: 34rem;
+    margin: 0 0 18px;
   }
 
   .method-list {
-    background: var(--rule);
-    border: 1px solid var(--rule);
-    display: grid;
-    gap: 1px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-2);
     list-style: none;
-    margin: var(--sp-8) 0 0;
+    margin: 0 0 28px;
     padding: 0;
   }
 
-  .method-list li {
-    align-items: start;
-    background: var(--paper);
-    display: grid;
-    gap: var(--sp-3);
-    grid-template-columns: auto minmax(0, 1fr);
-    padding: 14px var(--sp-4);
-  }
-
-  .method-number,
-  .method-text,
-  .capture-placeholder {
+  .method-chip {
+    border: 1px solid var(--rule);
+    color: var(--text);
     font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
     letter-spacing: 0.04em;
     line-height: 1.2;
+    padding: 8px 10px;
     text-transform: uppercase;
   }
 
-  .method-number {
+  .method-chip--last {
+    border-color: var(--green);
     color: var(--green);
   }
 
-  .method-text {
-    color: var(--text-strong);
-    font-weight: 500;
-  }
-
   .build-cta {
-    margin-top: var(--sp-8);
+    margin-top: 0;
   }
 
-  .build-cta .whatsapp-button {
-    width: 100%;
+  .build-cta :global(.whatsapp-button) {
+    display: inline-flex;
+    gap: 12px;
+    height: 56px;
+    min-height: 56px;
+    padding: 0 26px;
+    width: auto;
   }
 
   .build-capture {
-    display: grid;
-    place-items: center;
+    display: flex;
+    justify-content: center;
+    order: 2;
   }
 
   .phone-frame {
+    align-items: flex-end;
+    aspect-ratio: 9 / 17;
     background: var(--panel);
-    border: 1px solid var(--rule-hard);
-    border-radius: var(--radius);
+    border: 1px solid var(--ink);
+    display: flex;
+    justify-content: center;
+    max-width: 240px;
     padding: var(--sp-3);
-    width: min(100%, 20rem);
-    aspect-ratio: 9 / 16;
+    width: 100%;
   }
 
   .phone-screen {
-    border: 1px dashed var(--rule-hard);
     display: block;
     height: 100%;
     object-fit: cover;
@@ -160,28 +158,36 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
   }
 
   .capture-placeholder {
-    align-items: center;
+    align-items: flex-end;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(14, 18, 17, 0.06) 0 6px,
+      transparent 6px 12px
+    );
     color: var(--text);
     display: flex;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
     justify-content: center;
-    padding: var(--sp-4);
+    line-height: 1.2;
+    padding: 0;
     text-align: center;
+  }
+
+  @media (max-width: 899px) {
+    .build-cta :global(.whatsapp-button) {
+      width: 100%;
+    }
   }
 
   @media (min-width: 900px) {
     .build-section {
-      column-gap: var(--sp-12);
-      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-      padding-block: calc(var(--sp-12) + var(--sp-2));
-      padding-inline: calc(var(--sp-8) + var(--sp-2));
-    }
-
-    h2 {
-      font-size: 38px;
+      grid-template-columns: minmax(0, 1fr) 240px;
+      padding: calc(var(--sp-12) + var(--sp-2)) calc(var(--sp-8) + var(--sp-2));
     }
 
     .build-capture {
-      align-self: start;
+      order: 0;
     }
   }
 
