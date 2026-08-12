@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Incluye from '../components/Incluye.astro';
 import Problema from '../components/Problema.astro';
+import Proceso from '../components/Proceso.astro';
 import QueConstruyo from '../components/QueConstruyo.astro';
 import Recorrido from '../components/Recorrido.astro';
 import StickyCta from '../components/ui/StickyCta.astro';
@@ -14,6 +15,7 @@ const visibleSections = [
   ...(site.solucion ? ['recorrido'] : []),
   ...(site.queConstruyo ? ['queConstruyo'] : []),
   ...(site.incluye ? ['incluye'] : []),
+  ...(site.proceso ? ['proceso'] : []),
 ];
 
 const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).padStart(2, '0');
@@ -33,6 +35,7 @@ const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).
       />
     )}
     {site.incluye && <Incluye numero={sectionNumber('incluye')} incluye={site.incluye} />}
+    {site.proceso && <Proceso numero={sectionNumber('proceso')} proceso={site.proceso} />}
   </main>
   <StickyCta whatsapp={site.whatsapp} />
 </Base>

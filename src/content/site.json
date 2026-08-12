@@ -87,7 +87,7 @@
     "titulo": "QUÉ INCLUYE",
     "bloques": [
       {
-        "titulo": "BLOQUE 01 · ANTES DE DISEÑAR",
+        "titulo": "BLOQUE 01 · Antes de diseñar",
         "items": [
           "Análisis del negocio",
           "Análisis del cliente ideal",
@@ -95,7 +95,7 @@
         ]
       },
       {
-        "titulo": "BLOQUE 02 · LA PÁGINA",
+        "titulo": "BLOQUE 02 · La página",
         "items": [
           "Copy orientado a consultas — no necesitás traer los textos",
           "Diseño propio, no plantilla",
@@ -104,7 +104,7 @@
         ]
       },
       {
-        "titulo": "BLOQUE 03 · PARA QUE TE ENCUENTREN",
+        "titulo": "BLOQUE 03 · Para que te encuentren",
         "items": [
           "Ficha de Google configurada y conectada al sitio",
           "Datos estructurados para buscadores y asistentes de IA",
@@ -113,7 +113,7 @@
         ]
       },
       {
-        "titulo": "BLOQUE 04 · PUESTA EN MARCHA",
+        "titulo": "BLOQUE 04 · Puesta en marcha",
         "items": [
           "Dominio, hosting y publicación explicados",
           "Analítica básica",
@@ -122,7 +122,41 @@
       }
     ]
   },
-  "proceso": null,
+  "proceso": {
+    "titulo": "CÓMO TRABAJAMOS",
+    "etiquetas": {
+      "deVos": "DE VOS",
+      "cuando": "CUÁNDO"
+    },
+    "pasos": [
+      {
+        "n": 1,
+        "queePasa": "Charla de 15 min",
+        "queNecesito": "Contarme cómo conseguís clientes hoy",
+        "cuando": "Día 1"
+      },
+      {
+        "n": 2,
+        "queePasa": "Análisis y estructura",
+        "queNecesito": "Nada",
+        "cuando": "Días 2–4"
+      },
+      {
+        "n": 3,
+        "queePasa": "Diseño y desarrollo",
+        "queNecesito": "Una devolución",
+        "cuando": "Días 5–X"
+      },
+      {
+        "n": 4,
+        "queePasa": "Publicación y puesta a punto",
+        "queNecesito": "Nada",
+        "cuando": "Día X"
+      }
+    ],
+    "garantia": "Fecha de entrega comprometida.",
+    "soporte": "15 días de soporte posterior."
+  },
   "casos": {
     "titulo": "",
     "casos": [

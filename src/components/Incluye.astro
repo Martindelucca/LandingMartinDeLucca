@@ -62,25 +62,26 @@ const { numero, incluye } = Astro.props;
   h3 {
     color: var(--text-strong);
     font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     line-height: 1.25;
-    margin: 0 0 var(--sp-4);
+    margin: 0 0 14px;
   }
 
   .block-label {
     color: var(--text);
     font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.04em;
     line-height: 1.2;
-    margin: 0 0 var(--sp-2);
+    margin: 0 0 14px;
     text-transform: uppercase;
   }
 
   ul {
-    display: grid;
+    display: flex;
+    flex-direction: column;
     gap: var(--sp-2);
     list-style: none;
     margin: 0;
@@ -103,10 +104,6 @@ const { numero, incluye } = Astro.props;
       margin-bottom: var(--sp-8);
     }
 
-    h3 {
-      font-size: 24px;
-    }
-
     .includes-grid {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -115,6 +112,10 @@ const { numero, incluye } = Astro.props;
   @media (min-width: 1280px) {
     .includes-section {
       padding-inline: var(--sp-16);
+    }
+
+    .includes-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 </style>
