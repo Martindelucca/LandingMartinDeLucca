@@ -68,7 +68,7 @@ const { problema } = Astro.props;
     max-width: 34rem;
   }
 
-  @media (min-width: 600px) {
+  @media (min-width: 900px) {
     .problem-quotes {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
@@ -76,9 +76,11 @@ const { problema } = Astro.props;
     .problem-quotes p {
       padding: 26px;
     }
+  }
 
-    .problem-quotes p:last-child {
-      grid-column: 1 / -1;
+  @media (min-width: 1280px) {
+    .problem-quotes {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 

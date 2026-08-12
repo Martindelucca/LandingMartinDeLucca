@@ -27,6 +27,7 @@ interface Props {
   casos?: {
     casos?: Array<{
       nombre?: string | null;
+      descriptor?: string | null;
       url?: string | null;
     }> | null;
   } | null;
@@ -35,7 +36,10 @@ interface Props {
 const { hero, whatsapp, casos } = Astro.props;
 const firstCase = casos?.casos?.[0];
 const microProofUrl = firstCase?.url?.trim() ?? '';
-const microProofLabel = firstCase?.nombre?.trim() || hero.microPruebaFallback?.trim() || hero.microPrueba.trim();
+const microProofName = firstCase?.nombre?.trim() ?? '';
+const microProofDescriptor = firstCase?.descriptor?.trim() ?? '';
+const microProofCase = [microProofName, microProofDescriptor].filter(Boolean).join(', ');
+const microProofLabel = microProofCase || hero.microPruebaFallback?.trim() || hero.microPrueba.trim();
 const microProofPrefix = hero.microPruebaPrefix?.trim() ?? '';
 const hasMicroProof = Boolean(microProofUrl && microProofLabel);
 const h1Sentences = hero.h1.trim().split(/(?<=\.)\s+/);
@@ -71,12 +75,6 @@ const h1SecondTail = h1Words.slice(3).join(' ');
       />
       <p class="microcopy">{whatsapp.microcopy}</p>
     </div>
-    {hasMicroProof && (
-      <p class="micro-proof">
-        {microProofPrefix && <span>{microProofPrefix}: </span>}
-        <a href={microProofUrl}>{microProofLabel} <span aria-hidden="true">→</span></a>
-      </p>
-    )}
   </div>
   <div class="hero-diagram">
     <DiagramaRecorrido
@@ -84,6 +82,12 @@ const h1SecondTail = h1Words.slice(3).join(' ');
       canales={hero.diagrama.canales}
       nodos={hero.diagrama.nodos}
     />
+    {hasMicroProof && (
+      <p class="micro-proof">
+        {microProofPrefix && <span>{microProofPrefix}: </span>}
+        <a href={microProofUrl}>{microProofLabel} <span aria-hidden="true">→</span></a>
+      </p>
+    )}
   </div>
 </section>
 
