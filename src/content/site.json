@@ -52,6 +52,27 @@
     ],
     "puente": "El problema no es que te falte una página. Es que tu negocio existe en un solo lugar."
   },
+  "mecanismos": {
+    "numero": "02",
+    "titulo": "QUÉ CAMBIA",
+    "bloques": [
+      {
+        "numero": "01",
+        "titulo": "TE ENCUENTRAN",
+        "texto": "Cuando alguien te recomienda, lo primero que hace esa persona es buscarte. Hoy encuentra un perfil. Quiero que encuentre tu negocio: sitio propio, ficha de Google configurada y conectada, y todo escrito de forma que un buscador —o un asistente de IA— pueda entender qué hacés y dónde."
+      },
+      {
+        "numero": "02",
+        "titulo": "TE TOMAN EN SERIO",
+        "texto": "El que llega tiene que ver un negocio, no un perfil improvisado. La diferencia entre \"me lo recomendaron\" y \"sí, se ve serio\" se juega en los primeros diez segundos."
+      },
+      {
+        "numero": "03",
+        "titulo": "TE ESCRIBEN MEJOR",
+        "texto": "Que cuando te escriban ya sepan qué ofrecés, cómo trabajás y cuánto sale, en vez de arrancar cada conversación de cero."
+      }
+    ]
+  },
   "solucion": null,
   "queConstruyo": null,
   "incluye": null,
