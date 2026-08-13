@@ -15,7 +15,7 @@
     "mensajes": {
       "hero": "Hola Martin, vi tu página y quiero contarte mi caso.",
       "queConstruyo": "Hola Martin, vi lo que armás y quiero saber si me sirve.",
-      "inversion": "",
+      "inversion": "Hola Martin, vi la página y quería consultarte por la inversión.",
       "final": "",
       "sticky": "Hola Martin, te escribo desde tu página."
     }
@@ -28,26 +28,24 @@
     "microPruebaPrefix": "Caso publicado",
     "microPruebaFallback": "Un proyecto publicado y funcionando",
     "diagrama": {
-      "estado": "HOY",
-      "canales": "GOOGLE · INSTAGRAM · UN CONOCIDO",
-      "nodos": [
-        "Te buscan",
-        "Te encuentran a medias",
-        "No terminan de entender",
-        "Dudan",
-        "Desaparecen"
-      ]
+      "estado": "HOY / CUANDO TE BUSCAN",
+      "canales": [
+        { "nombre": "GOOGLE", "pregunta": "¿qué encuentran?" },
+        { "nombre": "INSTAGRAM", "pregunta": "¿qué tienen que recorrer?" },
+        { "nombre": "UN CONOCIDO", "pregunta": "¿qué link les pasás?" }
+      ],
+      "convergencia": "La información está repartida.",
+      "pregunta": "¿Dónde se entiende tu negocio?",
+      "aspectos": "QUÉ HACÉS · CÓMO TRABAJÁS · POR QUÉ ELEGIRTE"
     }
   },
   "problema": {
     "titulo": "PROBLEMA",
-      "citas": [
-        "«Me recomendaron, me buscaron en Google y no encontraron nada mío.»",
-        "«Tengo buenos clientes, pero online parezco improvisado.»",
-        "«No sé si la gente que mira mi perfil entiende lo que vendo.»",
-        "«Todo está repartido entre publicaciones, destacadas y chats.»",
-        "«Me preguntan siempre lo mismo: precio, cómo funciona, qué incluye.»",
-        "«Me escriben, contesto todo, y después desaparecen.»"
+    "citas": [
+      "«Me recomendaron, me buscaron en Google y no encontraron nada mío.»",
+      "«Hay gente que trabaja peor que yo y se presenta mejor.»",
+      "«Nadie termina de entender todo lo que hago.»",
+      "«Me escriben, contesto todo, y después desaparecen.»"
     ],
     "puente": "El problema no es que te falte una página. Es que tu negocio existe en un solo lugar."
   },
@@ -78,8 +76,10 @@
       "CONECTO CON WHATSAPP"
     ],
     "captura": {
-      "src": "",
-      "alt": "",
+      "src": "/img/construyo-mobile.webp",
+      "alt": "El sitio de Sin Brújula en un celular: el titular, la explicación del servicio y el botón de WhatsApp siempre a la vista.",
+      "width": 396,
+      "height": 761,
       "placeholder": "Captura real pendiente"
     }
   },
@@ -134,48 +134,131 @@
       {
         "n": 1,
         "queePasa": "Charla de 15 min",
+        "detalle": "Me contás cómo conseguís clientes y qué te preguntan siempre. No tenés que preparar nada.",
         "queNecesito": "Contarme cómo conseguís clientes hoy",
         "cuando": "Día 1"
       },
       {
         "n": 2,
         "queePasa": "Análisis y estructura",
+        "detalle": "Acá no hacés nada. Si me falta un dato te escribo; si no, seguís con lo tuyo.",
         "queNecesito": "Nada",
         "cuando": "Días 2–4"
       },
       {
         "n": 3,
         "queePasa": "Diseño y desarrollo",
+        "detalle": "Escribo, diseño y programo. Te muestro una vez y ajustamos sobre eso.",
         "queNecesito": "Una devolución",
-        "cuando": "Días 5–X"
+        "cuando": "Días 5–12"
       },
       {
         "n": 4,
         "queePasa": "Publicación y puesta a punto",
+        "detalle": "Publico, conecto la ficha de Google y te explico cómo funciona todo lo que queda a tu nombre.",
         "queNecesito": "Nada",
-        "cuando": "Día X"
+        "cuando": "Días 13–14"
       }
     ],
     "garantia": "Fecha de entrega comprometida.",
     "soporte": "15 días de soporte posterior."
   },
   "casos": {
-    "titulo": "",
+    "titulo": "UN CASO",
+    "etiquetas": {
+      "problema": "PROBLEMA",
+      "decision": "DECISIÓN",
+      "verSitio": "Ver el sitio publicado"
+    },
     "casos": [
       {
         "nombre": "Sin Brújula",
         "descriptor": "agencia de viajes",
-        "problema": "",
-        "decisiones": [],
-        "url": "https://sinbrujulaviajes.com.ar/"
+        "ciudad": "Jesús María",
+        "problema": "La web contaba quiénes eran, pero no llevaba a ninguna consulta.",
+        "decisiones": [
+          "Todo el sitio empuja a una sola acción: pedir la cotización por WhatsApp."
+        ],
+        "url": "https://sinbrujulaviajes.com.ar/",
+        "captura": {
+          "src": "/img/caso-sin-brujula.webp",
+          "alt": "Primera pantalla del sitio de Sin Brújula: los destinos que arman, los nombres de las dueñas y el botón para pedir cotización por WhatsApp.",
+          "width": 1600,
+          "height": 731,
+          "placeholder": "captura del sitio de Sin Brújula"
+        }
       }
     ],
     "testimonios": []
   },
-  "quienSoy": null,
-  "inversion": null,
+  "quienSoy": {
+    "titulo": "QUIÉN SOY",
+    "nombre": "Martin De Lucca",
+    "ciudad": "Córdoba",
+    "foto": {
+      "src": "/img/martin.webp",
+      "alt": "Martin De Lucca, en su escritorio.",
+      "width": 720,
+      "height": 720,
+      "placeholder": "foto real de Martin"
+    },
+    "texto": [
+      "No empiezo diseñando. Primero necesito entender qué vendés, quién te compra y qué necesita saber esa persona antes de escribirte.",
+      "Diseño y programo cada proyecto yo mismo. Vas a hablar siempre conmigo."
+    ]
+  },
+  "inversion": {
+    "titulo": "INVERSIÓN",
+    "marcoRetorno": "La pregunta no es cuánto sale una página, es cuántos clientes tiene que ayudarte a cerrar.",
+    "precio": {
+      "etiqueta": "PISO, PAGO ÚNICO",
+      "cifra": "$250.000",
+      "texto": "50 % para empezar y 50 % al entregar. El número exacto depende de cuántas secciones necesites; en 15 minutos te lo digo."
+    },
+    "costosFijos": {
+      "etiqueta": "COSTO FIJO MENSUAL",
+      "cifra": "$0",
+      "texto": "Yo no cobro nada por mes. La página queda a tu nombre.",
+      "dominio": "El dominio va incluido el primer año. Después lo renovás vos, a tu nombre: unos USD 20 al año.",
+      "montoDominioUsd": 20
+    }
+  },
   "noEsParaVos": null,
-  "faq": [],
+  "faq": {
+    "titulo": "PREGUNTAS",
+    "preguntas": [
+      {
+        "pregunta": "¿Me sirve si recién arranco?",
+        "respuesta": "Sí. Si estás empezando, la página es tu carta de presentación: te deja parado como un negocio en serio desde el primer día, y hace que el que te busca por tu nombre te encuentre. Lo único que no encaja es si vendés productos con envío: ahí te conviene una plataforma tipo Tienda Nube, no lo que hago yo.",
+        "abiertaPorDefecto": true
+      },
+      {
+        "pregunta": "¿Cuánto sale?",
+        "respuesta": "Desde $250.000, pago único. En 15 minutos de charla te digo el número para tu caso: tirarte uno a ciegas es hacerte perder el tiempo.",
+        "abiertaPorDefecto": false
+      },
+      {
+        "pregunta": "¿Esto me va a traer clientes?",
+        "respuesta": "La página trabaja para eso: que te encuentren cuando te buscan, que vean un negocio serio y que te escriban entendiendo qué ofrecés. Lo que no hago es prometerte un número, porque depende de tu rubro, de tu precio y de cómo atendés. Prefiero que lo veas funcionando.",
+        "abiertaPorDefecto": false
+      },
+      {
+        "pregunta": "¿Voy a aparecer en Google?",
+        "respuesta": "Sí: te dejo el sitio preparado para que Google lo lea y lo entienda, y la ficha de Google configurada y conectada, para que cuando alguien te busque por tu nombre o por tu negocio te encuentre. Lo que no te puedo prometer es salir primero en las búsquedas más peleadas de tu rubro: eso depende de la competencia y del tiempo.",
+        "abiertaPorDefecto": false
+      },
+      {
+        "pregunta": "¿Y si ya tengo Instagram y me funciona?",
+        "respuesta": "Mejor: ya tenés resuelta la parte difícil. No vengo a reemplazarlo. Instagram te hace conocido; la página es donde el que te googlea después te encuentra, entiende qué ofrecés y te escribe sabiendo de qué habla.",
+        "abiertaPorDefecto": false
+      },
+      {
+        "pregunta": "¿Después tengo que pagar todos los meses?",
+        "respuesta": "No. Es un pago único y yo no te cobro nada por mes. El primer año del dominio va incluido; después lo renovás vos, a tu nombre, y son unos USD 20 al año. No hay suscripción ni plataforma con abono.",
+        "abiertaPorDefecto": false
+      }
+    ]
+  },
   "ctaFinal": null,
   "footer": null
 }

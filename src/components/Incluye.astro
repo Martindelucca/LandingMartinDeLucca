@@ -16,22 +16,30 @@ const { numero, incluye } = Astro.props;
 <section class="includes-section" id="incluye" aria-labelledby="includes-title">
   <h2 id="includes-title" class="section-label">{numero} / {incluye.titulo}</h2>
   <div class="includes-grid">
-    {incluye.bloques.map((bloque) => (
-      <article class="include-block">
-        <p class="block-label">{bloque.titulo.split(' · ')[0]}</p>
-        <h3>{bloque.titulo.split(' · ')[1]}</h3>
-        <ul>
-          {bloque.items.map((item) => <li>{item}</li>)}
-        </ul>
-      </article>
-    ))}
+    {incluye.bloques.map((bloque) => {
+      const [etiqueta, nombre] = bloque.titulo.split(' · ');
+      // "BLOQUE 01" → "01": la palabra sobra, la numeración ya es el sistema de la página.
+      const numeroBloque = etiqueta.match(/\d+/)?.[0] ?? etiqueta;
+
+      return (
+        <article class="include-block">
+          <h3>
+            <span class="block-index">{numeroBloque}</span>
+            {nombre ?? etiqueta}
+          </h3>
+          <ul>
+            {bloque.items.map((item) => <li>{item}</li>)}
+          </ul>
+        </article>
+      );
+    })}
   </div>
 </section>
 
 <style>
   .includes-section {
     border-bottom: 1px solid var(--rule);
-    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+    padding: var(--sp-section-y) var(--sp-section-x);
   }
 
   .section-label {
@@ -41,42 +49,52 @@ const { numero, incluye } = Astro.props;
     font-weight: 500;
     letter-spacing: 0.08em;
     line-height: 1.2;
-    margin: 0 0 var(--sp-6);
+    margin: 0 0 var(--sp-section-gap);
     text-transform: uppercase;
   }
 
+  /*
+    Sin celdas cerradas. Eran contenedores puros y, sobre todo en mobile,
+    lo que costaba scroll no era el contenido sino el andamiaje: 48 px de
+    padding vertical por bloque más dos líneas de encabezado, por cuatro.
+  */
   .includes-grid {
-    background: var(--rule);
-    border: 1px solid var(--rule);
     display: grid;
-    gap: 1px;
     grid-template-columns: 1fr;
+    row-gap: var(--sp-8);
   }
 
+  /*
+    Sin filete: en varias columnas quedaban cuatro segmentos cortos flotando
+    a la misma altura y se leían como línea rota, no como estructura. El orden
+    lo dan el número verde y el aire, que es lo que ya hace el resto de la página.
+  */
   .include-block {
-    background: var(--paper);
     min-width: 0;
-    padding: var(--sp-6);
+    padding: 0;
   }
 
+
+  /* Número y nombre en una sola línea: "BLOQUE 01" arriba era una línea entera repetida cuatro veces. */
   h3 {
+    align-items: baseline;
     color: var(--text-strong);
+    display: flex;
     font-family: 'Archivo Variable', Arial, sans-serif;
     font-size: 18px;
     font-weight: 600;
+    gap: var(--sp-3);
     line-height: 1.25;
-    margin: 0 0 14px;
+    margin: 0 0 var(--sp-4);
   }
 
-  .block-label {
-    color: var(--text);
+  .block-index {
+    color: var(--green);
+    flex: none;
     font-family: 'JetBrains Mono', monospace;
     font-size: 11px;
     font-weight: 500;
     letter-spacing: 0.04em;
-    line-height: 1.2;
-    margin: 0 0 14px;
-    text-transform: uppercase;
   }
 
   ul {
@@ -95,26 +113,16 @@ const { numero, incluye } = Astro.props;
   }
 
   @media (min-width: 900px) {
-    .includes-section {
-      padding-block: calc(var(--sp-12) + var(--sp-2));
-      padding-inline: calc(var(--sp-8) + var(--sp-2));
-    }
-
-    .section-label {
-      margin-bottom: var(--sp-8);
-    }
-
     .includes-grid {
+      column-gap: var(--sp-12);
       grid-template-columns: repeat(2, minmax(0, 1fr));
+      row-gap: var(--sp-12);
     }
   }
 
   @media (min-width: 1280px) {
-    .includes-section {
-      padding-inline: var(--sp-16);
-    }
-
     .includes-grid {
+      column-gap: var(--sp-8);
       grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }

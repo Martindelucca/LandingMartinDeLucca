@@ -31,7 +31,9 @@ const href = `https://wa.me/${whatsapp.numero}?text=${encodeURIComponent(whatsap
     border-bottom: 1px solid var(--rule-hard);
     display: flex;
     justify-content: space-between;
-    padding: var(--sp-4) var(--sp-5);
+    /* El vertical es propio del header (§3); el lateral sigue al de sección
+       para que el nombre quede alineado con el contenido de abajo. */
+    padding: var(--sp-4) var(--sp-section-x);
   }
 
   .site-name {
@@ -74,18 +76,8 @@ const href = `https://wa.me/${whatsapp.numero}?text=${encodeURIComponent(whatsap
   }
 
   @media (min-width: 900px) {
-    .site-header {
-      padding-inline: calc(var(--sp-8) + var(--sp-2));
-    }
-
     .header-cta {
       display: inline-flex;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .site-header {
-      padding-inline: var(--sp-16);
     }
   }
 </style>

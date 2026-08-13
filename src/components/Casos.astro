@@ -1,0 +1,328 @@
+---
+import { imagenPublicable } from '../lib/media';
+
+interface Caso {
+  nombre?: string | null;
+  descriptor?: string | null;
+  ciudad?: string | null;
+  problema?: string | null;
+  decisiones?: string[] | null;
+  url?: string | null;
+  captura?: {
+    src?: string | null;
+    alt?: string | null;
+    width?: number | null;
+    height?: number | null;
+    placeholder?: string | null;
+  } | null;
+}
+
+interface Testimonio {
+  texto?: string | null;
+  nombre?: string | null;
+  negocio?: string | null;
+  ciudad?: string | null;
+}
+
+interface Props {
+  numero: string;
+  casos: {
+    titulo: string;
+    etiquetas: {
+      problema: string;
+      decision: string;
+      verSitio: string;
+    };
+    casos?: Caso[] | null;
+    testimonios?: Testimonio[] | null;
+  };
+}
+
+const { numero, casos } = Astro.props;
+
+const hostnameDe = (url: string) => {
+  try {
+    return new URL(url).hostname.replace(/^www\./, '');
+  } catch {
+    return url;
+  }
+};
+
+const casosPublicables = (casos.casos ?? [])
+  .filter((caso) => Boolean(caso?.nombre?.trim() && caso?.url?.trim()))
+  .map((caso) => {
+    const decisiones = (caso.decisiones ?? []).map((d) => d.trim()).filter(Boolean);
+    const problema = caso.problema?.trim() ?? '';
+    const alt = caso.captura?.alt?.trim() ?? '';
+    const capturaSrc = imagenPublicable(caso.captura?.src, alt);
+    const capturaPlaceholder = caso.captura?.placeholder?.trim() ?? '';
+
+    return {
+      titulo: [caso.nombre!.trim(), caso.descriptor?.trim(), caso.ciudad?.trim()]
+        .filter(Boolean)
+        .join(', '),
+      dominio: hostnameDe(caso.url!.trim()),
+      problema,
+      decisiones,
+      url: caso.url!.trim(),
+      capturaSrc,
+      capturaAlt: alt,
+      capturaWidth: caso.captura?.width ?? undefined,
+      capturaHeight: caso.captura?.height ?? undefined,
+      capturaPlaceholder,
+      tieneRelato: Boolean(problema || decisiones.length),
+      tieneCaptura: Boolean(capturaSrc || capturaPlaceholder),
+    };
+  });
+
+const testimoniosPublicables = (casos.testimonios ?? [])
+  .filter((t) => Boolean(t?.texto?.trim() && t?.nombre?.trim() && t?.negocio?.trim()))
+  .map((t) => ({
+    texto: t.texto!.trim(),
+    atribucion: [t.nombre!.trim(), t.negocio!.trim(), t.ciudad?.trim()].filter(Boolean).join(' · '),
+  }));
+---
+
+<section class="case-section" id="caso" aria-labelledby="case-title">
+  <h2 id="case-title" class="section-label">{numero} / {casos.titulo}</h2>
+
+  {casosPublicables.map((caso) => (
+    <article class:list={{ 'case-body': true, 'case-body--solo': !caso.tieneCaptura }}>
+      <div class="case-copy">
+        <h3>{caso.titulo}</h3>
+
+        {caso.tieneRelato && (
+          <div class="case-story">
+            {caso.problema && (
+              <div class="case-block">
+                <p class="block-label">{casos.etiquetas.problema}</p>
+                <p class="case-text">{caso.problema}</p>
+              </div>
+            )}
+            {caso.decisiones.length > 0 && (
+              <div class="case-block">
+                <p class="block-label">{casos.etiquetas.decision}</p>
+                {caso.decisiones.map((decision) => <p class="case-text">{decision}</p>)}
+              </div>
+            )}
+          </div>
+        )}
+
+        <p class="case-link">
+          <a href={caso.url} target="_blank" rel="noopener">
+            {casos.etiquetas.verSitio} <span aria-hidden="true">→</span>
+          </a>
+        </p>
+      </div>
+
+      {caso.tieneCaptura && (
+        <figure class="case-capture">
+          <figcaption class="capture-chrome">{caso.dominio}</figcaption>
+          {caso.capturaSrc ? (
+            <img
+              src={caso.capturaSrc}
+              alt={caso.capturaAlt}
+              width={caso.capturaWidth}
+              height={caso.capturaHeight}
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div class="capture-placeholder" role="img" aria-label={caso.capturaPlaceholder}>
+              <span>{caso.capturaPlaceholder}</span>
+            </div>
+          )}
+        </figure>
+      )}
+    </article>
+  ))}
+
+  {testimoniosPublicables.length > 0 && (
+    <ul class="case-quotes">
+      {testimoniosPublicables.map((testimonio) => (
+        <li>
+          <blockquote>{testimonio.texto}</blockquote>
+          <p class="quote-source">{testimonio.atribucion}</p>
+        </li>
+      ))}
+    </ul>
+  )}
+</section>
+
+<style>
+  .case-section {
+    border-bottom: 1px solid var(--rule);
+    padding: var(--sp-section-y) var(--sp-section-x);
+  }
+
+  .section-label {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-section-gap);
+    text-transform: uppercase;
+  }
+
+  .block-label,
+  .case-link,
+  .capture-chrome,
+  .capture-placeholder,
+  .quote-source {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .case-body {
+    display: grid;
+    gap: var(--sp-8);
+    grid-template-columns: 1fr;
+  }
+
+  .case-body + .case-body {
+    border-top: 1px solid var(--rule);
+    margin-top: var(--sp-12);
+    padding-top: var(--sp-12);
+  }
+
+  .case-copy {
+    min-width: 0;
+  }
+
+  h3 {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin: 0 0 var(--sp-6);
+  }
+
+  .case-story {
+    border-left: 2px solid var(--green);
+    padding-left: var(--sp-5);
+  }
+
+  .case-block + .case-block {
+    margin-top: var(--sp-5);
+  }
+
+  .block-label {
+    margin: 0 0 var(--sp-2);
+  }
+
+  .case-text {
+    color: var(--text-strong);
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  .case-text + .case-text {
+    margin-top: var(--sp-3);
+  }
+
+  .case-link {
+    margin: var(--sp-6) 0 0;
+  }
+
+  .case-link a {
+    color: var(--green);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+  }
+
+  /* Passe-partout: la captura va montada sobre panel, no colgada de un filete negro. */
+  .case-capture {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    margin: 0;
+    min-width: 0;
+    padding: var(--sp-3);
+  }
+
+  .capture-chrome {
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: var(--sp-3);
+    padding-bottom: var(--sp-3);
+  }
+
+  .case-capture img,
+  .capture-placeholder {
+    border: 1px solid var(--rule);
+    display: block;
+    width: 100%;
+  }
+
+  /* La captura manda su propia proporción; el placeholder no tiene ninguna. */
+  .case-capture img {
+    height: auto;
+  }
+
+  .capture-placeholder {
+    aspect-ratio: 16 / 10;
+  }
+
+  .capture-placeholder {
+    align-items: flex-end;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(14, 18, 17, 0.06) 0 6px,
+      transparent 6px 12px
+    );
+    display: flex;
+    padding: var(--sp-4);
+    text-transform: none;
+  }
+
+  .case-quotes {
+    border-top: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-8);
+    list-style: none;
+    margin: var(--sp-12) 0 0;
+    padding: var(--sp-8) 0 0;
+  }
+
+  .case-quotes blockquote {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.25;
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  .quote-source {
+    margin: var(--sp-3) 0 0;
+  }
+
+  @media (min-width: 900px) {
+    .case-body {
+      align-items: center;
+      gap: var(--sp-12);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    }
+
+    .case-body--solo {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .case-quotes {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

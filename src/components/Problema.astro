@@ -22,7 +22,7 @@ const { numero, problema } = Astro.props;
 <style>
   .problema {
     border-bottom: 1px solid var(--rule);
-    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+    padding: var(--sp-section-y) var(--sp-section-x);
   }
 
   .section-label {
@@ -32,68 +32,63 @@ const { numero, problema } = Astro.props;
     font-weight: 500;
     letter-spacing: 0.08em;
     line-height: 1.2;
-    margin: 0 0 var(--sp-6);
+    margin: 0 0 var(--sp-section-gap);
     text-transform: uppercase;
   }
 
+  /*
+    Sin cajas. Las celdas con filete eran contenedores puros: no cargaban
+    argumento y a anchos grandes quedaban medio vacías, con la cita a 17 px
+    perdida adentro. Ahora cada voz se separa con un filete superior y pesa
+    lo que tiene que pesar — el volumen de voces ES el argumento de la sección.
+  */
   .problem-quotes {
-    background: var(--rule);
-    border: 1px solid var(--rule);
     display: grid;
-    gap: 1px;
     grid-template-columns: 1fr;
   }
 
   .problem-quotes p {
-    background: var(--paper);
+    border-top: 1px solid var(--rule-hard);
     color: var(--text-strong);
-    font-size: 17px;
-    line-height: 1.45;
-    padding: var(--sp-5);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: var(--fs-h3);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    padding: var(--sp-5) 0;
     width: 100%;
   }
 
   .problem-quotes p span {
     display: block;
-    max-width: 34rem;
+    max-width: 40rem;
   }
 
+  /* Enuncia la tesis y es el único puente hacia Recorrido: va a escala de titular. */
   .problem-bridge {
     color: var(--text-strong);
     font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    line-height: 1.25;
-    margin-top: var(--sp-8);
-    max-width: 34rem;
+    font-size: var(--fs-h2);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin-top: var(--sp-section-gap);
+    max-width: 22ch;
   }
 
   @media (min-width: 900px) {
+    /*
+      2×2 en todo el desktop, sin fila de cuatro. En una sola fila las citas
+      quedan angostas y la sección se lee como una tira de etiquetas; en cuadro
+      se leen como cuatro voces distintas, que es lo que tiene que transmitir.
+    */
     .problem-quotes {
+      column-gap: var(--sp-16);
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
     .problem-quotes p {
-      padding: 26px;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .problem-quotes {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 900px) {
-    .problema {
-      padding-block: calc(var(--sp-12) + var(--sp-2));
-      padding-inline: calc(var(--sp-8) + var(--sp-2));
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .problema {
-      padding-inline: var(--sp-16);
+      padding: var(--sp-6) 0;
     }
   }
 </style>

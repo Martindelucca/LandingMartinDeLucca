@@ -22,7 +22,7 @@ const { numero, recorrido } = Astro.props;
   <p class="route-bridge">{recorrido.puente}</p>
   <ol class="route-nodes" aria-labelledby="recorrido-title">
     {recorrido.diagrama.nodos.map((nodo, index) => (
-      <li class="route-node">
+      <li class="route-node" style={`--i: ${index}`}>
         <span class="route-number">{String(index + 1).padStart(2, '0')}</span>
         <span class="route-text">{nodo}</span>
         {index === 0 && <span class="route-channels">{recorrido.diagrama.canales}</span>}
@@ -32,12 +32,48 @@ const { numero, recorrido } = Astro.props;
   <p class="route-closing">{recorrido.cierre}</p>
 </section>
 
+<script>
+  const initRecorridoNodes = () => {
+    const nodes = document.querySelector<HTMLElement>('#recorrido .route-nodes');
+
+    if (
+      !nodes ||
+      nodes.dataset.reveal !== undefined ||
+      !('IntersectionObserver' in window) ||
+      !('matchMedia' in window)
+    ) {
+      return;
+    }
+
+    nodes.dataset.reveal = '';
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      nodes.classList.add('is-visible');
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          nodes.classList.add('is-visible');
+          observer.unobserve(nodes);
+        }
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -10% 0px' }
+    );
+
+    observer.observe(nodes);
+  };
+
+  initRecorridoNodes();
+</script>
+
 <style>
   .recorrido {
     background: var(--ink);
     border-bottom: 1px solid var(--rule);
     color: var(--text-on-ink);
-    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+    padding: var(--sp-section-y) var(--sp-section-x);
   }
 
   .section-label,
@@ -53,13 +89,13 @@ const { numero, recorrido } = Astro.props;
   }
 
   .section-label {
-    margin: 0 0 var(--sp-6);
+    margin: 0 0 var(--sp-section-gap);
   }
 
   h2 {
     color: var(--text-on-ink);
     font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 28px;
+    font-size: var(--fs-h2);
     font-weight: 700;
     letter-spacing: -0.02em;
     line-height: 1.12;
@@ -81,6 +117,31 @@ const { numero, recorrido } = Astro.props;
     list-style: none;
     margin: 0;
     padding: 0;
+  }
+
+  /*
+    Aparición escalonada de los nodos: autorizada en DESIGN_SYSTEM §10
+    (80 ms entre nodos, cadena < 500 ms). Mismo patrón que el rail de Proceso:
+    la clase de arranque la pone el JS, así que sin JS el diagrama está completo
+    y visible (invariante 19).
+  */
+  @media (prefers-reduced-motion: no-preference) {
+    .route-nodes[data-reveal] .route-node {
+      opacity: 0;
+      transform: translateY(var(--sp-3));
+    }
+
+    .route-nodes[data-reveal].is-visible .route-node {
+      animation: route-node-in 400ms ease-out forwards;
+      animation-delay: calc(var(--i) * 80ms);
+    }
+
+    @keyframes route-node-in {
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
   }
 
   .route-node {
@@ -126,31 +187,20 @@ const { numero, recorrido } = Astro.props;
   .route-closing {
     color: var(--text-on-ink-muted);
     font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 24px;
+    font-size: var(--fs-h3);
     font-weight: 600;
-    line-height: 1.25;
-    margin: var(--sp-8) 0 0;
+    line-height: 1.35;
+    margin: var(--sp-section-gap) 0 0;
+    max-width: 46rem;
   }
 
   @media (min-width: 900px) {
-    .recorrido {
-      padding-block: calc(var(--sp-12) + var(--sp-2));
-      padding-inline: calc(var(--sp-8) + var(--sp-2));
-    }
-
     h2 {
-      font-size: 38px;
       max-width: 60%;
     }
 
     .route-nodes {
       grid-template-columns: repeat(5, minmax(0, 1fr));
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .recorrido {
-      padding-inline: var(--sp-16);
     }
   }
 </style>

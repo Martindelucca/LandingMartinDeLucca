@@ -1,5 +1,6 @@
 ---
 import WhatsappButton from './ui/WhatsappButton.astro';
+import { imagenPublicable } from '../lib/media';
 
 interface Props {
   numero: string;
@@ -10,6 +11,8 @@ interface Props {
     captura: {
       src: string;
       alt: string;
+      width?: number | null;
+      height?: number | null;
       placeholder: string;
     };
   };
@@ -23,6 +26,7 @@ interface Props {
 }
 
 const { numero, queConstruyo, whatsapp } = Astro.props;
+const capturaSrc = imagenPublicable(queConstruyo.captura.src, queConstruyo.captura.alt);
 ---
 
 <section class="build-section" id="que-construyo" aria-labelledby="build-title">
@@ -48,8 +52,16 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
 
   <div class="build-capture">
     <div class="phone-frame">
-      {queConstruyo.captura.src ? (
-        <img class="phone-screen" src={queConstruyo.captura.src} alt={queConstruyo.captura.alt} />
+      {capturaSrc ? (
+        <img
+          class="phone-screen"
+          src={capturaSrc}
+          alt={queConstruyo.captura.alt}
+          width={queConstruyo.captura.width ?? undefined}
+          height={queConstruyo.captura.height ?? undefined}
+          loading="lazy"
+          decoding="async"
+        />
       ) : (
         <div class="phone-screen capture-placeholder" role="img" aria-label={queConstruyo.captura.placeholder}>
           <span>{queConstruyo.captura.placeholder}</span>
@@ -66,7 +78,7 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
     display: grid;
     gap: calc(var(--sp-8) + var(--sp-2));
     grid-template-columns: 1fr;
-    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+    padding: var(--sp-section-y) var(--sp-section-x);
   }
 
   .build-copy {
@@ -87,7 +99,7 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
   h2 {
     color: var(--text-strong);
     font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 34px;
+    font-size: var(--fs-h2);
     font-weight: 700;
     letter-spacing: -0.03em;
     line-height: 1.12;
@@ -145,7 +157,7 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
     border: 1px solid var(--ink);
     display: flex;
     justify-content: center;
-    max-width: 240px;
+    max-width: 280px;
     padding: var(--sp-3);
     width: 100%;
   }
@@ -182,18 +194,11 @@ const { numero, queConstruyo, whatsapp } = Astro.props;
 
   @media (min-width: 900px) {
     .build-section {
-      grid-template-columns: minmax(0, 1fr) 240px;
-      padding: calc(var(--sp-12) + var(--sp-2)) calc(var(--sp-8) + var(--sp-2));
+      grid-template-columns: minmax(0, 1fr) 280px;
     }
 
     .build-capture {
       order: 0;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .build-section {
-      padding-inline: var(--sp-16);
     }
   }
 </style>

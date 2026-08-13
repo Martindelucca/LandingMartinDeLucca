@@ -1,0 +1,203 @@
+---
+import WhatsappButton from './ui/WhatsappButton.astro';
+
+interface Props {
+  numero: string;
+  inversion: {
+    titulo: string;
+    marcoRetorno: string;
+    precio: {
+      etiqueta: string;
+      cifra: string;
+      texto: string;
+    };
+    costosFijos: {
+      etiqueta: string;
+      cifra: string;
+      texto: string;
+      dominio: string;
+      montoDominioUsd: number | null;
+    };
+  };
+  whatsapp: {
+    numero: string;
+    etiquetaCta: string;
+    mensajes: {
+      inversion: string;
+    };
+  };
+}
+
+const { numero, inversion, whatsapp } = Astro.props;
+const { precio, costosFijos } = inversion;
+---
+
+<section class="invest-section" id="inversion" aria-labelledby="invest-title">
+  <span id="precio" class="anchor-alias"></span>
+  <p class="section-label">{numero} / {inversion.titulo}</p>
+
+  <h2 id="invest-title">{inversion.marcoRetorno}</h2>
+
+  <div class="invest-plate">
+    <div class="plate-cell">
+      <p class="block-label">{precio.etiqueta}</p>
+      <p class="plate-figure">{precio.cifra}</p>
+      <p class="plate-text">{precio.texto}</p>
+    </div>
+    <div class="plate-cell">
+      <p class="block-label">{costosFijos.etiqueta}</p>
+      <p class="plate-figure plate-figure--free">{costosFijos.cifra}</p>
+      <p class="plate-text">{costosFijos.texto}</p>
+    </div>
+  </div>
+
+  <p class="domain-note">{costosFijos.dominio}</p>
+
+  <div class="invest-cta">
+    <WhatsappButton
+      number={whatsapp.numero}
+      message={whatsapp.mensajes.inversion}
+      label={whatsapp.etiquetaCta}
+      origin="inversion"
+    />
+  </div>
+</section>
+
+<style>
+  .invest-section {
+    border-bottom: 1px solid var(--rule);
+    padding: var(--sp-section-y) var(--sp-section-x);
+    position: relative;
+  }
+
+  /* #precio se manda por DM y puede estar circulando: se conserva como ancla propia (D-15). */
+  .anchor-alias {
+    position: absolute;
+    top: 0;
+  }
+
+  .section-label {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-section-gap);
+    text-transform: uppercase;
+  }
+
+  /*
+    Línea de encuadre, no titular: va sin peso de H2 para que las dos cifras
+    del rectángulo sean lo que domina la sección (UX_SPEC §09).
+  */
+  h2 {
+    color: var(--text-strong);
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 1.4;
+    margin: 0 0 var(--sp-8);
+    max-width: 40rem;
+  }
+
+  /*
+    Un solo rectángulo con las dos cifras adentro, al mismo tamaño y a la misma
+    altura: la comparación $250.000 una vez / $0 por mes ES el argumento de la
+    sección y se tiene que leer sin leer una palabra. Separadas en dos cajas
+    distintas dejan de leerse como par.
+  */
+  .invest-plate {
+    background: var(--rule-hard);
+    border: 1px solid var(--rule-hard);
+    display: grid;
+    gap: 1px;
+    grid-template-columns: 1fr;
+  }
+
+  .plate-cell {
+    background: var(--paper);
+    min-width: 0;
+    padding: var(--sp-6);
+  }
+
+  .block-label {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-3);
+    text-transform: uppercase;
+  }
+
+  .plate-figure {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0 0 var(--sp-4);
+  }
+
+  /* Único uso del acento como cifra, previsto en DESIGN_SYSTEM §1. */
+  .plate-figure--free {
+    color: var(--green);
+  }
+
+  .plate-text {
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 34rem;
+  }
+
+  /*
+    El dato del dominio vive acá y no dentro de la celda del $0: ahí competía
+    con la cifra y "después son USD 20" sonaba a retirar el regalo en la misma
+    frase. En mono y afuera se lee como letra chica honesta (D-23).
+  */
+  .domain-note {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
+    margin: var(--sp-4) 0 0;
+    max-width: 40rem;
+  }
+
+  .invest-cta {
+    margin-top: var(--sp-8);
+  }
+
+  @media (min-width: 900px) {
+    h2 {
+      font-size: 24px;
+    }
+
+    .invest-plate {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .plate-cell {
+      padding: var(--sp-8);
+    }
+
+    .plate-figure {
+      font-size: 44px;
+    }
+
+    .invest-cta :global(.whatsapp-button) {
+      display: inline-flex;
+      gap: 12px;
+      height: 56px;
+      min-height: 56px;
+      padding: 0 26px;
+      width: auto;
+    }
+  }
+</style>

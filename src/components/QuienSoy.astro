@@ -1,0 +1,180 @@
+---
+import { imagenPublicable } from '../lib/media';
+
+interface Props {
+  numero: string;
+  quienSoy: {
+    titulo: string;
+    nombre: string;
+    ciudad?: string | null;
+    foto?: {
+      src?: string | null;
+      alt?: string | null;
+      width?: number | null;
+      height?: number | null;
+      placeholder?: string | null;
+    } | null;
+    texto: string[];
+  };
+}
+
+const { numero, quienSoy } = Astro.props;
+
+const alt = quienSoy.foto?.alt?.trim() ?? '';
+const fotoSrc = imagenPublicable(quienSoy.foto?.src, alt);
+const fotoPlaceholder = quienSoy.foto?.placeholder?.trim() ?? '';
+const tieneFoto = Boolean(fotoSrc || fotoPlaceholder);
+const titulo = [quienSoy.nombre?.trim(), quienSoy.ciudad?.trim()].filter(Boolean).join(', ');
+const parrafos = quienSoy.texto.map((t) => t.trim()).filter(Boolean);
+---
+
+<section class="about-section" id="quien-soy" aria-labelledby="about-title">
+  <h2 id="about-title" class="section-label">{numero} / {quienSoy.titulo}</h2>
+
+  <div class="about-block">
+    {tieneFoto && (
+      <div class="about-photo">
+        {fotoSrc ? (
+          <img
+            src={fotoSrc}
+            alt={alt}
+            width={quienSoy.foto?.width ?? undefined}
+            height={quienSoy.foto?.height ?? undefined}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <div class="photo-placeholder" role="img" aria-label={fotoPlaceholder}>
+            <span>{fotoPlaceholder}</span>
+          </div>
+        )}
+      </div>
+    )}
+
+    <div class="about-copy">
+      <h3>{titulo}</h3>
+      {parrafos.map((parrafo) => <p class="about-text">{parrafo}</p>)}
+    </div>
+  </div>
+</section>
+
+<style>
+  .about-section {
+    border-bottom: 1px solid var(--rule);
+    padding: var(--sp-section-y) var(--sp-section-x);
+  }
+
+  .section-label {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-section-gap);
+    text-transform: uppercase;
+  }
+
+  .about-block {
+    max-width: 34rem;
+  }
+
+  .about-photo {
+    margin-bottom: var(--sp-6);
+    max-width: 320px;
+  }
+
+  .about-copy {
+    min-width: 0;
+  }
+
+  /*
+    Cuadrada por CSS y no por el archivo: la foto de prueba se reemplaza por una
+    profesional más adelante y no debería obligar a recortar ni a tocar el código.
+  */
+  .about-photo img,
+  .photo-placeholder {
+    aspect-ratio: 1 / 1;
+    border: 1px solid var(--rule);
+    display: block;
+    width: 100%;
+  }
+
+  .about-photo img {
+    height: auto;
+    object-fit: cover;
+  }
+
+  .photo-placeholder {
+    align-items: flex-end;
+    background-image: repeating-linear-gradient(
+      135deg,
+      rgba(14, 18, 17, 0.06) 0 6px,
+      transparent 6px 12px
+    );
+    color: var(--text);
+    display: flex;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    padding: var(--sp-4);
+  }
+
+  h3 {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-4);
+  }
+
+  .about-text {
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  .about-text + .about-text {
+    margin-top: var(--sp-4);
+  }
+
+  @media (min-width: 900px) {
+    /*
+      Banda horizontal: apilado dejaba media pantalla vacía en desktop.
+      No es la silueta de Un caso pese a ser texto + imagen (D-22): allá la
+      imagen es una captura apaisada montada sobre panel y ocupa media sección,
+      acá es un retrato cuadrado chico, del otro lado, y el texto va a escala
+      de declaración. Lo que domina es la frase, no la foto.
+    */
+    .about-block {
+      align-items: center;
+      display: grid;
+      gap: var(--sp-12);
+      grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+      max-width: none;
+    }
+
+    .about-photo {
+      margin-bottom: 0;
+      max-width: none;
+    }
+
+    .about-copy {
+      max-width: 40rem;
+    }
+
+    h3 {
+      margin-bottom: var(--sp-5);
+    }
+
+    .about-text {
+      font-size: 20px;
+      line-height: 1.5;
+    }
+  }
+</style>

@@ -18,7 +18,7 @@ La página no promete posiciones en Google, tráfico ni clientes. Ver `docs/DECI
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | Por qué cada decisión, qué se descartó, qué no se toca |
 | [`AGENTS.md`](AGENTS.md) | Reglas para agentes que implementan |
 
-**Todo cerrado.** `DESIGN_SYSTEM.md` está en v1.0 y `UX_SPEC.md` en v2.0: se puede implementar directo.
+**Todo cerrado.** `DESIGN_SYSTEM.md` está en v1.1 y `UX_SPEC.md` en v2.0: se puede implementar directo.
 
 ---
 
@@ -30,19 +30,24 @@ La página no promete posiciones en Google, tráfico ni clientes. Ver `docs/DECI
 | UX y arquitectura de información | ✅ cerrado |
 | Decisiones | ✅ cerrado |
 | Dirección visual | ✅ cerrada — *Plano* |
-| Sistema de diseño | ✅ v1.0, contrastes verificados |
-| Implementación | ⬜ no iniciada |
+| Sistema de diseño | ✅ v1.1, contrastes verificados |
+| Implementación | 🟡 en curso — hasta `09 / PREGUNTAS` |
 | Contenido final | ⬜ faltan insumos |
+
+Secciones construidas: Header · Hero · `01 / PROBLEMA` · `02 / RECORRIDO` · `03 / QUÉ CONSTRUYO` · `04 / QUÉ INCLUYE` · `05 / CÓMO TRABAJAMOS` · `06 / UN CASO` · `07 / QUIÉN SOY` · `08 / INVERSIÓN` · `09 / PREGUNTAS`.
+Faltan: Empezar · Footer.
 
 ### Insumos bloqueantes
 
 Sin esto hay secciones que no se pueden publicar:
 
-- [ ] **Foto real de Martin** — sin ella, la sección "Quién soy" pierde su función principal
-- [ ] **Capturas mobile + link vivo** del proyecto publicado (agencia de viajes)
-- [ ] **Costo anual exacto del dominio en USD** — sin la cifra, la sección de inversión no se renderiza
-- [ ] **Nombre real del cliente del caso publicado** — "Sin Brújula" es un nombre inventado por la herramienta de diseño
+- [ ] **Foto real de Martin** en `public/img/martin.webp` — hoy hay una de prueba pendiente de reemplazo. Sin foto, la sección "Quién soy" pierde su función principal
+- [ ] **Captura mobile** del proyecto publicado, para `03 / QUÉ CONSTRUYO` (mockup de celular). Que sea de **otra sección** del sitio, no del hero: el hero ya se usa en `06 / UN CASO` y repetirlo se nota
+- [x] ~~Captura apaisada para `06 / UN CASO`~~ — cargada, junto con el link vivo
+- [x] ~~Costo anual exacto del dominio en USD~~ — USD 20, primer año incluido (D-23)
 - [ ] **Testimonios con nombre + negocio + ciudad** — sin atribución, no se publican
+
+El nombre del cliente del caso **no es un insumo pendiente**: "Sin Brújula" es el nombre real y se publica. Ver `docs/DECISIONS.md` → D-11, aclaración del 2026-08-11.
 
 No se reemplazan con contenido inventado ni con imágenes de stock. Ver `docs/DECISIONS.md` → D-12.
 
@@ -82,6 +87,22 @@ Reglas al editar:
 - Los campos vacíos se dejan vacíos. Una sección sin datos no se muestra, y eso es intencional.
 - Si se saca el monto del dominio, desaparece la sección de precio completa. Es a propósito: decir "no pagás nada por mes" y que después aparezca un costo destruye la credibilidad del argumento.
 - Un testimonio sin nombre y negocio no se muestra.
+
+---
+
+## Capturas e imágenes
+
+Van en `public/img/`, en **WebP real** — no un PNG renombrado, que pesa diez veces más y el navegador no comprime. Para convertir una captura nueva:
+
+```bash
+node -e "require('sharp')('ORIGEN.png').resize({width:1600,withoutEnlargement:true}).webp({quality:80}).toFile('public/img/DESTINO.webp').then(i=>console.log(i.width+'x'+i.height,(i.size/1024).toFixed(0)+' KB'))"
+```
+
+Después hay que cargar en `site.json` el `width` y el `height` **de salida** (los que imprime el comando), no los del original: son los que evitan el salto de layout.
+
+`sharp` está como `devDependency` solo para esto. El sitio no lo usa en build — las imágenes viven en `public/` y Astro no las toca.
+
+Si una imagen declarada en `site.json` no existe en `public/`, la sección cae al placeholder en vez de mostrar una imagen rota. Es a propósito.
 
 ---
 
