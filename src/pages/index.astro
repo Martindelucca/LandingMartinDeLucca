@@ -1,6 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import Casos from '../components/Casos.astro';
+import CtaFinal from '../components/CtaFinal.astro';
 import Faq from '../components/Faq.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -41,6 +42,7 @@ const visibleSections = [
   ...(site.quienSoy ? ['quienSoy'] : []),
   ...(hayInversionPublicable ? ['inversion'] : []),
   ...(hayFaqPublicable ? ['faq'] : []),
+  ...(site.ctaFinal ? ['ctaFinal'] : []),
 ];
 
 const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).padStart(2, '0');
@@ -71,6 +73,9 @@ const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).
       />
     )}
     {hayFaqPublicable && <Faq numero={sectionNumber('faq')} faq={site.faq} />}
+    {site.ctaFinal && (
+      <CtaFinal numero={sectionNumber('ctaFinal')} ctaFinal={site.ctaFinal} whatsapp={site.whatsapp} />
+    )}
   </main>
   <StickyCta whatsapp={site.whatsapp} />
   {site.footer && (

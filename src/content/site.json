@@ -16,7 +16,7 @@
       "hero": "Hola Martin, vi tu página y quiero contarte mi caso.",
       "queConstruyo": "Hola Martin, vi lo que armás y quiero saber si me sirve.",
       "inversion": "Hola Martin, vi la página y quería consultarte por la inversión.",
-      "final": "",
+      "final": "Hola Martin, te escribo desde tu página.",
       "sticky": "Hola Martin, te escribo desde tu página."
     }
   },
@@ -259,10 +259,13 @@
       }
     ]
   },
-  "ctaFinal": null,
+  "ctaFinal": {
+    "titulo": "EMPEZAR",
+    "texto": "Contame qué servicio ofrecés y cómo te llegan hoy los clientes. Te digo si una landing te sirve, y si no te sirve también te lo digo."
+  },
   "footer": {
     "ciudad": "Córdoba, Argentina",
-    "instagram": "",
+    "instagram": "https://www.instagram.com/martindelucca_/",
     "instagramLabel": "Instagram"
   }
 }

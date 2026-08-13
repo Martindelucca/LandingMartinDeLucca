@@ -1,0 +1,116 @@
+---
+import WhatsappButton from './ui/WhatsappButton.astro';
+
+interface Props {
+  numero: string;
+  ctaFinal: {
+    titulo: string;
+    texto: string;
+  };
+  whatsapp: {
+    numero: string;
+    etiquetaCta: string;
+    microcopy: string;
+    mensajes: {
+      final: string;
+    };
+  };
+}
+
+const { numero, ctaFinal, whatsapp } = Astro.props;
+---
+
+<section class="final-cta" id="empezar" aria-labelledby="final-cta-title">
+  <h2 id="final-cta-title" class="section-label">{numero} / {ctaFinal.titulo}</h2>
+  <div class="final-cta-content">
+    <p class="final-cta-text">{ctaFinal.texto}</p>
+
+    <div class="final-cta-action">
+      <WhatsappButton
+        number={whatsapp.numero}
+        message={whatsapp.mensajes.final}
+        label={whatsapp.etiquetaCta}
+        origin="final"
+      />
+      <p class="microcopy">{whatsapp.microcopy}</p>
+      <p class="phone-number">{whatsapp.numero}</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .final-cta {
+    background: var(--ink);
+    border-bottom: 1px solid var(--rule-hard);
+    padding: var(--sp-section-y) var(--sp-section-x);
+  }
+
+  .section-label {
+    color: var(--green-light);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-section-gap);
+    text-transform: uppercase;
+  }
+
+  .final-cta-content {
+    display: grid;
+    gap: var(--sp-8);
+  }
+
+  .final-cta-text {
+    color: var(--text-on-ink);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: var(--fs-h2);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    margin: 0;
+    max-width: 36rem;
+  }
+
+  .final-cta-action {
+    max-width: 34rem;
+  }
+
+  .final-cta-action :global(.whatsapp-button) {
+    width: 100%;
+  }
+
+  .microcopy,
+  .phone-number {
+    color: var(--text-on-ink-muted);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+    margin: var(--sp-3) 0 0;
+  }
+
+  .phone-number {
+    color: var(--text-on-ink);
+    margin-top: var(--sp-2);
+    user-select: text;
+  }
+
+  @media (min-width: 900px) {
+    .final-cta-content {
+      align-items: end;
+      gap: var(--sp-12);
+      grid-template-columns: minmax(0, 1fr) minmax(280px, 34rem);
+    }
+
+    .final-cta-text {
+      max-width: 38rem;
+    }
+
+    .final-cta-action {
+      justify-self: end;
+      width: 100%;
+    }
+  }
+</style>
