@@ -12,6 +12,7 @@ interface Props {
     pasos: Array<{
       n: number;
       queePasa: string;
+      detalle?: string;
       queNecesito: string;
       cuando: string;
     }>;
@@ -39,7 +40,10 @@ const { numero, proceso } = Astro.props;
       {proceso.pasos.map((paso) => (
         <tr>
           <td class="step-number">{String(paso.n).padStart(2, '0')}</td>
-          <td class="step-title">{paso.queePasa}</td>
+          <td class="step-title">
+            <span class="step-name">{paso.queePasa}</span>
+            {paso.detalle && <span class="step-detail">{paso.detalle}</span>}
+          </td>
           <td>{paso.queNecesito}</td>
           <td>{paso.cuando}</td>
         </tr>
@@ -52,6 +56,7 @@ const { numero, proceso } = Astro.props;
       <li class="mobile-rail__step" style={`--i: ${index}`}>
         <span class="mobile-rail__when">{paso.cuando}</span>
         <h3 class="mobile-rail__title">{paso.queePasa}</h3>
+        {paso.detalle && <p class="mobile-rail__detail">{paso.detalle}</p>}
         <p class="mobile-rail__you">
           <span class="mobile-rail__label">{proceso.etiquetas.deVos}:</span> {paso.queNecesito}
         </p>
@@ -104,7 +109,7 @@ const { numero, proceso } = Astro.props;
 <style>
   .process-section {
     border-bottom: 1px solid var(--rule);
-    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+    padding: var(--sp-section-y) var(--sp-section-x);
   }
 
   .section-label,
@@ -119,7 +124,7 @@ const { numero, proceso } = Astro.props;
   }
 
   .section-label {
-    margin: 0 0 var(--sp-6);
+    margin: 0 0 var(--sp-section-gap);
   }
 
   .process-table {
@@ -143,12 +148,12 @@ const { numero, proceso } = Astro.props;
 
   th:nth-child(2),
   td:nth-child(2) {
-    width: 30%;
+    width: 42%;
   }
 
   th:nth-child(3),
   td:nth-child(3) {
-    width: 42%;
+    width: 30%;
   }
 
   th:last-child,
@@ -179,10 +184,25 @@ const { numero, proceso } = Astro.props;
     padding-right: var(--sp-3);
   }
 
-  .step-title {
+  .step-name {
     color: var(--text-strong);
+    display: block;
     font-family: 'Archivo Variable', Arial, sans-serif;
     font-weight: 600;
+  }
+
+  /*
+    La línea que explica el paso. "De vos" y "Cuándo" siguen alineados al tope
+    de la fila: la columna "De vos" leída hacia abajo tiene que seguir
+    entrándote de un vistazo, que es lo que sostiene la sección (UX_SPEC §06).
+  */
+  .step-detail {
+    color: var(--text);
+    display: block;
+    font-size: 15px;
+    line-height: 1.5;
+    margin-top: var(--sp-2);
+    max-width: 34rem;
   }
 
   .mobile-rail {
@@ -201,11 +221,6 @@ const { numero, proceso } = Astro.props;
   }
 
   @media (min-width: 900px) {
-    .process-section {
-      padding-block: calc(var(--sp-12) + var(--sp-2));
-      padding-inline: calc(var(--sp-8) + var(--sp-2));
-    }
-
     th:first-child,
     td:first-child {
       width: 72px;
@@ -287,6 +302,14 @@ const { numero, proceso } = Astro.props;
       margin: var(--sp-2) 0;
     }
 
+    .mobile-rail__detail {
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
+      margin: 0 0 var(--sp-3);
+      max-width: 40ch;
+    }
+
     .mobile-rail__you {
       color: var(--text);
       font-size: 17px;
@@ -324,9 +347,4 @@ const { numero, proceso } = Astro.props;
     }
   }
 
-  @media (min-width: 1280px) {
-    .process-section {
-      padding-inline: var(--sp-16);
-    }
-  }
 </style>

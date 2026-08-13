@@ -6,7 +6,9 @@ interface Props {
   message: string;
   label: string;
   variant?: 'primary' | 'ghost';
-  origin?: 'header' | 'hero' | 'queConstruyo' | 'sticky';
+  // Un origen por punto de CTA de UX_SPEC § Sistema de CTAs: es lo que separa
+  // los eventos de cta_click por sección en la analítica (D-10).
+  origin?: 'header' | 'hero' | 'queConstruyo' | 'inversion' | 'final' | 'sticky';
 }
 
 const { number, message, label, variant = 'primary', origin = 'hero' } = Astro.props;

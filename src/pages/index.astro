@@ -1,14 +1,34 @@
 ---
 import Base from '../layouts/Base.astro';
+import Casos from '../components/Casos.astro';
+import Faq from '../components/Faq.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Incluye from '../components/Incluye.astro';
+import Inversion from '../components/Inversion.astro';
 import Problema from '../components/Problema.astro';
 import Proceso from '../components/Proceso.astro';
 import QueConstruyo from '../components/QueConstruyo.astro';
+import QuienSoy from '../components/QuienSoy.astro';
 import Recorrido from '../components/Recorrido.astro';
 import StickyCta from '../components/ui/StickyCta.astro';
 import site from '../content/site.json';
+
+// Un caso solo se publica si hay al menos uno con nombre real y link vivo (D-12).
+const hayCasoPublicable = Boolean(
+  site.casos?.casos?.some((caso) => caso?.nombre?.trim() && caso?.url?.trim())
+);
+
+// Sin monto exacto de dominio y sin la mención de la renovación, la sección no se
+// publica: decir "$0 por mes" y que al año aparezca un costo del que no se habló
+// destruye el argumento entero (invariante 8, D-23).
+const hayInversionPublicable = Boolean(
+  site.inversion?.costosFijos?.montoDominioUsd && site.inversion?.costosFijos?.dominio?.trim()
+);
+
+const hayFaqPublicable = Boolean(
+  site.faq?.preguntas?.some((p) => p?.pregunta?.trim() && p?.respuesta?.trim())
+);
 
 const visibleSections = [
   ...(site.problema ? ['problema'] : []),
@@ -16,6 +36,10 @@ const visibleSections = [
   ...(site.queConstruyo ? ['queConstruyo'] : []),
   ...(site.incluye ? ['incluye'] : []),
   ...(site.proceso ? ['proceso'] : []),
+  ...(hayCasoPublicable ? ['casos'] : []),
+  ...(site.quienSoy ? ['quienSoy'] : []),
+  ...(hayInversionPublicable ? ['inversion'] : []),
+  ...(hayFaqPublicable ? ['faq'] : []),
 ];
 
 const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).padStart(2, '0');
@@ -36,6 +60,16 @@ const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).
     )}
     {site.incluye && <Incluye numero={sectionNumber('incluye')} incluye={site.incluye} />}
     {site.proceso && <Proceso numero={sectionNumber('proceso')} proceso={site.proceso} />}
+    {hayCasoPublicable && <Casos numero={sectionNumber('casos')} casos={site.casos} />}
+    {site.quienSoy && <QuienSoy numero={sectionNumber('quienSoy')} quienSoy={site.quienSoy} />}
+    {hayInversionPublicable && (
+      <Inversion
+        numero={sectionNumber('inversion')}
+        inversion={site.inversion}
+        whatsapp={site.whatsapp}
+      />
+    )}
+    {hayFaqPublicable && <Faq numero={sectionNumber('faq')} faq={site.faq} />}
   </main>
   <StickyCta whatsapp={site.whatsapp} />
 </Base>

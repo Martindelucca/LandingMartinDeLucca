@@ -12,8 +12,10 @@ interface Props {
     microPruebaFallback?: string;
     diagrama: {
       estado: string;
-      canales: string;
-      nodos: string[];
+      canales: Array<{ nombre: string; pregunta: string }>;
+      convergencia: string;
+      pregunta: string;
+      aspectos: string;
     };
   };
   whatsapp: {
@@ -80,7 +82,9 @@ const h1SecondTail = h1Words.slice(3).join(' ');
     <DiagramaRecorrido
       estado={hero.diagrama.estado}
       canales={hero.diagrama.canales}
-      nodos={hero.diagrama.nodos}
+      convergencia={hero.diagrama.convergencia}
+      pregunta={hero.diagrama.pregunta}
+      aspectos={hero.diagrama.aspectos}
     />
     {hasMicroProof && (
       <p class="micro-proof">
@@ -100,13 +104,13 @@ const h1SecondTail = h1Words.slice(3).join(' ');
 
   .hero-content {
     border-bottom: 1px solid var(--rule);
-    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+    padding: var(--sp-section-y) var(--sp-section-x);
     width: 100%;
   }
 
   .hero-diagram {
     background-color: var(--panel);
-    padding: calc(var(--sp-8) + var(--sp-2)) var(--sp-5);
+    padding: var(--sp-section-y) var(--sp-section-x);
   }
 
   .eyebrow {
@@ -123,10 +127,10 @@ const h1SecondTail = h1Words.slice(3).join(' ');
   h1 {
     color: var(--text-strong);
     font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 38px;
+    font-size: var(--fs-display);
     font-weight: 700;
     letter-spacing: -0.035em;
-    line-height: 1.04;
+    line-height: 1;
   }
 
   .h1-second,
@@ -172,20 +176,9 @@ const h1SecondTail = h1Words.slice(3).join(' ');
     text-underline-offset: 0.16em;
   }
 
-  @media (min-width: 600px) {
-    h1 {
-      font-size: 44px;
-    }
-  }
-
   @media (min-width: 900px) {
     .hero {
       grid-template-columns: 1.05fr 0.95fr;
-    }
-
-    .hero-content,
-    .hero-diagram {
-      padding: calc(var(--sp-12) + var(--sp-2)) calc(var(--sp-8) + var(--sp-2));
     }
 
     .hero-content {
@@ -194,29 +187,32 @@ const h1SecondTail = h1Words.slice(3).join(' ');
       max-width: none;
     }
 
+    /*
+      Centrado vertical: el panel arrancaba pegado arriba y dejaba media
+      columna vacía debajo, que era buena parte de por qué se leía como
+      nota al pie al lado del H1.
+    */
     .hero-diagram {
       background-image: linear-gradient(var(--rule) 1px, transparent 1px),
         linear-gradient(90deg, var(--rule) 1px, transparent 1px);
       background-size: var(--sp-8) var(--sp-8);
-    }
-
-    h1 {
-      font-size: 50px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .h1-tail {
       display: block;
     }
 
-    .hero-action {
+    .hero-lede {
+      font-size: 20px;
+      line-height: 1.5;
       margin-top: var(--sp-8);
     }
-  }
 
-  @media (min-width: 1280px) {
-    .hero-content,
-    .hero-diagram {
-      padding-inline: var(--sp-16);
+    .hero-action {
+      margin-top: var(--sp-12);
     }
   }
 </style>

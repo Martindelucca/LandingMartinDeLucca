@@ -29,4 +29,48 @@
 
   --radius: 2px;
   --radius-0: 0;
+
+  /*
+    Escala tipográfica y ritmo de sección (D-24).
+    Viven acá y no en cada componente: ajustar el aire de la página tenía que
+    ser un cambio, no diez. Cuerpo (17 px) y mono (11–12 px) no escalan —
+    el contraste sale de agrandar lo grande, no de achicar lo legible.
+  */
+  --fs-display: 40px;
+  --fs-h2: 28px;
+  --fs-h3: 20px;
+
+  --sp-section-y: calc(var(--sp-12) + var(--sp-2));
+  --sp-section-x: var(--sp-5);
+  --sp-section-gap: var(--sp-6);
+}
+
+@media (min-width: 600px) {
+  :root {
+    --fs-display: 52px;
+    --fs-h2: 32px;
+    --fs-h3: 22px;
+  }
+}
+
+@media (min-width: 900px) {
+  :root {
+    --fs-display: 72px;
+    --fs-h2: 44px;
+    --fs-h3: 24px;
+
+    --sp-section-y: var(--sp-24);
+    --sp-section-x: calc(var(--sp-8) + var(--sp-2));
+    --sp-section-gap: var(--sp-12);
+  }
+}
+
+@media (min-width: 1280px) {
+  :root {
+    --fs-display: 88px;
+    --fs-h2: 52px;
+    --fs-h3: 26px;
+
+    --sp-section-x: var(--sp-16);
+  }
 }

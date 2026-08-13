@@ -1,0 +1,145 @@
+---
+interface Props {
+  numero: string;
+  faq: {
+    titulo: string;
+    preguntas: Array<{
+      pregunta: string;
+      respuesta: string;
+      abiertaPorDefecto?: boolean;
+    }>;
+  };
+}
+
+const { numero, faq } = Astro.props;
+
+// Una pregunta sin respuesta escrita no se publica: un acordeón que se abre
+// y no dice nada es peor que no tener la pregunta.
+const preguntas = faq.preguntas.filter((p) => p.pregunta?.trim() && p.respuesta?.trim());
+
+/*
+  Dos columnas independientes en vez de una grilla de dos: abrir una respuesta
+  empuja solo su propia columna. En grilla, las filas comparten alto y abrir
+  una pregunta desplaza también la de al lado.
+*/
+const mitad = Math.ceil(preguntas.length / 2);
+const columnas = [preguntas.slice(0, mitad), preguntas.slice(mitad)].filter((c) => c.length);
+---
+
+<section class="faq-section" id="faq" aria-labelledby="faq-title">
+  <h2 id="faq-title" class="section-label">{numero} / {faq.titulo}</h2>
+
+  <div class="faq-columns">
+    {columnas.map((columna) => (
+      <div class="faq-list">
+        {columna.map((item) => (
+          <details class="faq-item" open={item.abiertaPorDefecto}>
+            <summary>
+              <span class="faq-question">{item.pregunta}</span>
+            </summary>
+            <p class="faq-answer">{item.respuesta}</p>
+          </details>
+        ))}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .faq-section {
+    border-bottom: 1px solid var(--rule);
+    padding: var(--sp-section-y) var(--sp-section-x);
+  }
+
+  .section-label {
+    color: var(--green);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+    margin: 0 0 var(--sp-section-gap);
+    text-transform: uppercase;
+  }
+
+  .faq-columns {
+    display: grid;
+    gap: 0;
+    grid-template-columns: 1fr;
+  }
+
+  .faq-list {
+    border-top: 1px solid var(--rule);
+    min-width: 0;
+  }
+
+  .faq-item {
+    border-bottom: 1px solid var(--rule);
+  }
+
+  summary {
+    align-items: baseline;
+    cursor: pointer;
+    display: flex;
+    gap: var(--sp-4);
+    justify-content: space-between;
+    list-style: none;
+    /* Área táctil ≥ 44 px con el padding de fila. */
+    padding: var(--sp-5) 0;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* El signo es el único indicador de estado: no puede depender de color ni de hover. */
+  summary::after {
+    color: var(--green);
+    content: '+';
+    flex: none;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 16px;
+    line-height: 1.2;
+  }
+
+  .faq-item[open] summary::after {
+    content: '–';
+  }
+
+  .faq-question {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .faq-answer {
+    color: var(--text);
+    font-size: 17px;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 34rem;
+    padding-bottom: var(--sp-5);
+  }
+
+  @media (min-width: 900px) {
+    .faq-columns {
+      align-items: start;
+      column-gap: var(--sp-16);
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    summary {
+      padding: var(--sp-6) 0;
+    }
+
+    .faq-question {
+      font-size: 20px;
+    }
+
+    .faq-answer {
+      padding-bottom: var(--sp-6);
+    }
+  }
+</style>

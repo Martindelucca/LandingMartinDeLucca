@@ -1,107 +1,191 @@
 ---
 interface Props {
   estado: string;
-  canales: string;
-  nodos: string[];
+  canales: Array<{ nombre: string; pregunta: string }>;
+  convergencia: string;
+  pregunta: string;
+  aspectos: string;
 }
 
-const { estado, canales, nodos } = Astro.props;
+const { estado, canales, convergencia, pregunta, aspectos } = Astro.props;
 ---
 
 <div class="diagram-panel">
   <p class="diagram-state">{estado}</p>
-  <ol class="diagram" aria-label={estado}>
-    {nodos.map((nodo, index) => (
-      <>
-        <li class:list={['diagram-node', index < 2 ? 'diagram-node--firm' : 'diagram-node--fading']}>
-          <span class="diagram-index">{String(index + 1).padStart(2, '0')}</span>
-          <span class="diagram-text">{nodo}</span>
-          {index === 0 && <span class="diagram-channels">{canales}</span>}
-        </li>
-        {index < nodos.length - 1 && <li class="diagram-arrow" aria-hidden="true">↓</li>}
-      </>
+
+  <ol class="sources" aria-label={estado}>
+    {canales.map((canal) => (
+      <li class="source">
+        <span class="source-name">{canal.nombre}</span>
+        <span class="source-question">{canal.pregunta}</span>
+      </li>
     ))}
   </ol>
+
+  <div class="connector" aria-hidden="true">
+    <span class="stem"></span>
+    <span class="stem"></span>
+    <span class="stem"></span>
+  </div>
+
+  <div class="destination">
+    <p class="destination-converge">{convergencia}</p>
+    <p class="destination-question">{pregunta}</p>
+    <p class="destination-aspects">{aspectos}</p>
+  </div>
 </div>
 
 <style>
   .diagram-panel {
     min-width: 0;
+    text-align: center;
+  }
+
+  .diagram-state,
+  .source-name,
+  .source-question,
+  .destination-aspects {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    line-height: 1.3;
+    text-transform: uppercase;
   }
 
   .diagram-state {
+    border-bottom: 1px solid var(--rule);
     color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
     font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    line-height: 1.2;
-    margin-bottom: var(--sp-6);
-    text-transform: uppercase;
+    margin: 0 0 var(--sp-8);
+    padding-bottom: var(--sp-5);
   }
 
-  .diagram {
+  /*
+    Tres orígenes, un destino. La topología es lo que la separa del diagrama
+    de Recorrido: allá es una cadena lineal de cinco nodos iguales sobre --ink;
+    acá es una convergencia de tres en uno sobre --panel. Distinta forma,
+    distinto fondo, distinta lectura (D-25).
+  */
+  .sources {
+    display: grid;
+    gap: var(--sp-3);
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .source {
+    align-items: center;
+    background: var(--paper);
+    border: 1px solid var(--rule-hard);
+    border-radius: var(--radius);
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    list-style: none;
+    gap: var(--sp-2);
+    justify-content: center;
+    min-height: var(--sp-12);
     min-width: 0;
+    padding: var(--sp-4) var(--sp-2);
   }
 
-  .diagram-node {
-    align-items: center;
-    border-radius: var(--radius);
-    display: grid;
-    font-family: 'Archivo Variable', Arial, sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    gap: var(--sp-3);
-    grid-template-columns: auto minmax(0, 1fr);
-    line-height: 1.25;
-    min-height: 48px;
-    min-width: 0;
-    padding: 14px var(--sp-4);
-  }
-
-  .diagram-node--firm {
-    background: var(--paper);
-    border: 1px solid var(--ink);
+  .source-name {
     color: var(--text-strong);
+    font-size: 11px;
   }
 
-  .diagram-node--fading {
-    border: 1px dashed var(--text);
+  /*
+    La pregunta es el mecanismo: ninguna de las tres se puede contestar con
+    confianza. Va en minúscula y en --text para quedar subordinada al canal,
+    que es lo que se escanea primero.
+  */
+  .source-question {
     color: var(--text);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    text-transform: none;
   }
 
-  .diagram-index,
-  .diagram-channels,
-  .diagram-arrow {
+  /*
+    Conector en horquilla, no en diagonales: las diagonales quedan bien a un
+    ancho fijo y se descuadran en cualquier otro. Tres bajadas, un travesaño
+    y una bajada al destino, todo con porcentajes — aguanta cualquier ancho.
+  */
+  .connector {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    height: var(--sp-12);
+    position: relative;
+  }
+
+  .stem {
+    border-left: 1px dashed var(--text);
+    height: 50%;
+    justify-self: center;
+    opacity: 0.55;
+  }
+
+  .connector::before {
+    border-top: 1px dashed var(--text);
+    content: '';
+    inset-inline: 16.666%;
+    opacity: 0.55;
+    position: absolute;
+    top: 50%;
+  }
+
+  .connector::after {
+    border-left: 1px dashed var(--text);
+    content: '';
+    height: 50%;
+    left: 50%;
+    opacity: 0.55;
+    position: absolute;
+    top: 50%;
+  }
+
+  .destination {
+    background: var(--paper);
+    border: 1px solid var(--rule-hard);
+    border-radius: var(--radius);
+    padding: var(--sp-6) var(--sp-5);
+  }
+
+  .destination-converge {
     color: var(--text);
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    font-weight: 400;
+    font-size: 15px;
+    line-height: 1.4;
+    margin: 0 0 var(--sp-3);
+  }
+
+  /* El destino es una pregunta y no una respuesta: ahí es donde falta algo. */
+  .destination-question {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: var(--fs-h3);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+    margin: 0;
+  }
+
+  .destination-aspects {
+    border-top: 1px solid var(--rule);
+    color: var(--text);
+    font-size: 11px;
     letter-spacing: 0.04em;
-    line-height: 1.2;
-  }
-
-  .diagram-channels {
-    grid-column: 2;
-    text-transform: uppercase;
-  }
-
-  .diagram-arrow {
-    padding-left: var(--sp-4);
+    line-height: 1.6;
+    margin: var(--sp-5) 0 0;
+    padding-top: var(--sp-4);
   }
 
   @media (min-width: 900px) {
-    .diagram-node {
-      width: 100%;
+    .connector {
+      height: var(--sp-16);
     }
 
-    .diagram-text,
-    .diagram-channels {
-      white-space: nowrap;
+    .destination {
+      padding: var(--sp-8);
     }
   }
 </style>
