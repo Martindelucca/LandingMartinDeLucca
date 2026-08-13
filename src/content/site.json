@@ -260,5 +260,9 @@
     ]
   },
   "ctaFinal": null,
-  "footer": null
+  "footer": {
+    "ciudad": "Córdoba, Argentina",
+    "instagram": "",
+    "instagramLabel": "Instagram"
+  }
 }

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Casos from '../components/Casos.astro';
 import Faq from '../components/Faq.astro';
+import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Incluye from '../components/Incluye.astro';
@@ -72,4 +73,7 @@ const sectionNumber = (key: string) => String(visibleSections.indexOf(key) + 1).
     {hayFaqPublicable && <Faq numero={sectionNumber('faq')} faq={site.faq} />}
   </main>
   <StickyCta whatsapp={site.whatsapp} />
+  {site.footer && (
+    <Footer footer={site.footer} nombre={site.header.nombre} numero={site.whatsapp.numero} />
+  )}
 </Base>

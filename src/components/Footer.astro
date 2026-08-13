@@ -1,0 +1,102 @@
+---
+interface Props {
+  footer: {
+    ciudad?: string | null;
+    instagram?: string | null;
+    instagramLabel?: string | null;
+  };
+  nombre: string;
+  numero: string;
+}
+
+const { footer, nombre, numero } = Astro.props;
+const ciudad = footer.ciudad?.trim() ?? '';
+const instagramUrl = footer.instagram?.trim() ?? '';
+const instagramLabel = footer.instagramLabel?.trim() ?? '';
+const phone = numero.trim();
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" aria-labelledby="footer-name">
+  <div class="footer-main">
+    <p id="footer-name" class="footer-name">{nombre}</p>
+
+    <div class="footer-details">
+      {ciudad && <span>{ciudad}</span>}
+      {phone && <span>{phone}</span>}
+      {instagramUrl && instagramLabel && (
+        <a href={instagramUrl} target="_blank" rel="noopener">
+          {instagramLabel}
+        </a>
+      )}
+      <time datetime={String(year)}>{year}</time>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--rule-hard);
+    padding: var(--sp-8) var(--sp-section-x);
+  }
+
+  .footer-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--sp-5);
+  }
+
+  .footer-name {
+    color: var(--text-strong);
+    font-family: 'Archivo Variable', Arial, sans-serif;
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .footer-details {
+    align-items: baseline;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--sp-3) var(--sp-6);
+  }
+
+  .footer-details > * {
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.4;
+  }
+
+  .footer-details a {
+    color: var(--green);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.16em;
+  }
+
+  .footer-details a:hover {
+    color: var(--green-hover);
+  }
+
+  @media (min-width: 900px) {
+    .site-footer {
+      padding-bottom: var(--sp-12);
+      padding-top: var(--sp-12);
+    }
+
+    .footer-main {
+      align-items: baseline;
+      flex-direction: row;
+      gap: var(--sp-12);
+      justify-content: space-between;
+    }
+
+    .footer-details {
+      justify-content: flex-end;
+    }
+  }
+</style>
